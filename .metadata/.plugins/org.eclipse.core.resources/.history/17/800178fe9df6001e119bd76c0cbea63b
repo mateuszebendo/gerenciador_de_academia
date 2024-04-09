@@ -1,0 +1,22 @@
+package academia.gerenciamento.classes;
+
+import java.time.LocalDate;
+
+public abstract class Pessoa {
+	private String nome;
+	private String cpf;
+	private LocalDate dNasc;
+	private String contato;
+	private String senha;
+
+	// Construtor
+	public Pessoa(String nome, String cpf, LocalDate dNasc, String contato, String senha) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dNasc = dNasc;
+		this.contato = contato;
+		this.senha = senha;
+	}
+
+}

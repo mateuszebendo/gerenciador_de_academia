@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\Users\arthn\OneDrive\Área de Trabalho\trabalhoPOO\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+35558400.index
+3482268857.index

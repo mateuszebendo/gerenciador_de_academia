@@ -1,0 +1,11 @@
+package academia.gerenciamento.subclassesPessoa;
+
+import java.time.LocalDate;
+
+import academia.gerenciamento.classes.Plano;
+
+public class Aluno {
+	 private LocalDate dataMatricula;
+	 private String avaliacoesFisicas;
+	 private Plano plano;
+}

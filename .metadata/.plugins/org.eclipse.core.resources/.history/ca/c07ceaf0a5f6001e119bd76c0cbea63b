@@ -1,0 +1,23 @@
+package academia.gerenciamento.paralela.classe;
+
+import java.time.LocalDate;
+
+import academia.gerenciamento.subclassesPessoa.Aluno;
+import academia.gerenciamento.subclassesPessoa.PersonalTrainer;
+
+public class Avaliacao {
+	private Aluno aluno;
+	private PersonalTrainer personal;
+	private String descricao;
+	private LocalDate data;
+
+	// Construtor
+	public Avaliacao(Aluno aluno, PersonalTrainer personal, String descricao, LocalDate data) {
+		super();
+		this.aluno = aluno;
+		this.personal = personal;
+		this.descricao = descricao;
+		this.data = data;
+	}
+
+}
