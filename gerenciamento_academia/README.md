@@ -4,4 +4,4 @@ O projeto é de código aberto e agradecemos qualquer melhoria ou refatoração 
 
 # A Estrutura do Projeto
 
-![UML do Projeto](Sistema de Gerenciamento de Academia.jpg)
+![UML do Projeto](uml.jpg)
