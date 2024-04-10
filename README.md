@@ -4,8 +4,8 @@ O projeto é de código aberto e agradecemos qualquer melhoria ou refatoração 
 
 # A Estrutura do Projeto
 
-![UML do Projeto](uml.jpg)
+![UML do Projeto](./uml.jpg)
 
 # A Estrutura do Banco de Dados 
 
-![Banco de Dados do Projeto](DiagramaBD.jpg)
+![Banco de Dados do Projeto](./DiagramaBD.jpg)
