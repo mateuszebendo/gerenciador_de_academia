@@ -1,4 +1,4 @@
-package academiaGerenciamentoClassePrincipal;
+package org.serrafit.classes;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,6 @@ public abstract class Pessoa implements InterfaceMenu{
 
 	// Construtor
 	public Pessoa(String nome, String cpf, LocalDate dNasc, String contato, String senha) {
-		super();
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dNasc = dNasc;

@@ -1,4 +1,4 @@
-package academiaGerenciamentoClassePrincipal;
+package org.serrafit.classes;
 
 public interface InterfaceMenu {
 	void exibirMenu();

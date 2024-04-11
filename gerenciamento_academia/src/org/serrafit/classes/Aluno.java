@@ -1,17 +1,16 @@
-package academiaGerenciamentoSubClassesPessoa;
+package org.serrafit.classes;
 
 import java.time.LocalDate;
 
-import academiaGerenciamentoParalelaClasse.Plano;
-
-public class Aluno {
+public class Aluno extends Pessoa{
 	private LocalDate dataMatricula;
 	private String avaliacoesFisicas;
 	private Plano plano;
 
 	// Construtor
-	public Aluno(LocalDate dataMatricula, String avaliacoesFisicas, Plano plano) {
-		super();
+	public Aluno(String nome, String cpf, LocalDate dNasc, String contato, String senha, LocalDate dataMatricula,
+			String avaliacoesFisicas, Plano plano) {
+		super(nome, cpf, dNasc, contato, senha);
 		this.dataMatricula = dataMatricula;
 		this.avaliacoesFisicas = avaliacoesFisicas;
 		this.plano = plano;
@@ -21,6 +20,8 @@ public class Aluno {
 	public LocalDate getDataMatricula() {
 		return dataMatricula;
 	}
+
+
 
 	public void setDataMatricula(LocalDate dataMatricula) {
 		this.dataMatricula = dataMatricula;
@@ -48,6 +49,17 @@ public class Aluno {
 				Avaliação Física: %s
 				Plano: %s
 				""", dataMatricula, avaliacoesFisicas, plano);
+	}
+
+	@Override
+	public void exibirMenu() {
+		System.out.println("Menu Aluno");
+	}
+
+	@Override
+	public void selecionarOpcao() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

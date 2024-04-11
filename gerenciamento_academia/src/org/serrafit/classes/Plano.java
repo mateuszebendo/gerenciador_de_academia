@@ -1,4 +1,4 @@
-package academiaGerenciamentoParalelaClasse;
+package org.serrafit.classes;
 
 import java.time.LocalDate;
 
@@ -9,12 +9,9 @@ public class Plano {
 	private LocalDate duracao;
 
 	// Construtor
-	public Plano(String nome, double valor, String descricao, LocalDate duracao) {
+	public Plano(String nome) {
 		super();
 		this.nome = nome;
-		this.valor = valor;
-		this.descricao = descricao;
-		this.duracao = duracao;
 	}
 
 	// Get & Set

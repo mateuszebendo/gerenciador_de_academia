@@ -1,26 +1,30 @@
-package academiaGerenciamentoSubClassesPessoa;
+package org.serrafit.classes;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
-public class PersonalTrainer {
-	private LocalDate horarioAtendimento;
+public class PersonalTrainer extends Pessoa{
+	private LocalTime horarioAtendimento;
 	private String cref;
 	private String especialidade;
 
 	// Construtor
-	public PersonalTrainer(LocalDate horarioAtendimento, String cref, String especialidade) {
-		super();
+	public PersonalTrainer(String nome, String cpf, LocalDate dNasc, String contato, String senha,
+			LocalTime horarioAtendimento, String cref, String especialidade) {
+		super(nome, cpf, dNasc, contato, senha);
 		this.horarioAtendimento = horarioAtendimento;
 		this.cref = cref;
 		this.especialidade = especialidade;
 	}
 
+
+
 	// Get & Set
-	public LocalDate getHorarioAtendimento() {
+	public LocalTime getHorarioAtendimento() {
 		return horarioAtendimento;
 	}
 
-	public void setHorarioAtendimento(LocalDate horarioAtendimento) {
+	public void setHorarioAtendimento(LocalTime horarioAtendimento) {
 		this.horarioAtendimento = horarioAtendimento;
 	}
 
@@ -38,6 +42,14 @@ public class PersonalTrainer {
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
+	}
+	
+	public void exibirMenu() {
+		System.out.println("Menu Personal Trainer");
+	}
+	
+	public void selecionarOpcao() {
+		
 	}
 
 	// Método

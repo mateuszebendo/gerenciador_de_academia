@@ -1,34 +1,23 @@
-package academiaGerenciamentoParalelaClasse;
+package org.serrafit.classes;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
-import academiaGerenciamentoSubClassesPessoa.Aluno;
-import academiaGerenciamentoSubClassesPessoa.PersonalTrainer;
-
-public class Agendamento {
-	private LocalTime horario;
+public class Avaliacao {
 	private Aluno aluno;
 	private PersonalTrainer personal;
+	private String descricao;
 	private LocalDate data;
 
 	// Construtor
-	public Agendamento(LocalTime horario, Aluno aluno, PersonalTrainer personal, LocalDate data) {
+	public Avaliacao(Aluno aluno, PersonalTrainer personal, String descricao, LocalDate data) {
 		super();
-		this.horario = horario;
 		this.aluno = aluno;
 		this.personal = personal;
+		this.descricao = descricao;
 		this.data = data;
 	}
-
-	public LocalTime getHorario() {
-		return horario;
-	}
-
-	public void setHorario(LocalTime horario) {
-		this.horario = horario;
-	}
-
+	
+	//Get & Set
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -45,6 +34,14 @@ public class Agendamento {
 		this.personal = personal;
 	}
 
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public LocalDate getData() {
 		return data;
 	}
@@ -52,14 +49,15 @@ public class Agendamento {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-
+	
+	//Método
 	public String toString() {
 		return String.format("""
-				Horario Agendado: %s
 				Aluno: %s
-				Personal trainer: %s
-				Data Inicio: %s
-				""", horario, aluno, personal, data);
+				Personal Trainer: %s
+				Descrição: %s
+				Data da Avaliação: %s
+				""", aluno, personal, descricao, data);
 	}
 
 }
