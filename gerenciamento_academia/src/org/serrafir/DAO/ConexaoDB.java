@@ -6,24 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ConexaoDB {
-	String url = "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?user=postgres.ximiuubjkqrxjuxmjnrh&password=c4iX4zanot1!";
-	Connection conexao = null;
+	static String url = "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?user=postgres.ximiuubjkqrxjuxmjnrh&password=c4iX4zanot1!";
+	static Connection conexao = null;
 	
-	public void criarConexao () {
+	public static Connection criarConexao () {
 		try {
 			Class.forName("org.postgresql.Driver");
-			conexao = DriverManager.getConnection(url);
-			if(conexao != null) {
-				System.out.println("FOI KHEZAC FOI!");
-			}
+			return conexao = DriverManager.getConnection(url);
 		} catch (Exception e) {
 			System.out.println("Erro: " + e);
+			return null;
 		}
 	}
 	
-	public void fecharConexao () {
+	public static void fecharConexao () {
 		try {
-			conexao.close();
+			if(conexao != null) conexao.close();
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e);
 		}
