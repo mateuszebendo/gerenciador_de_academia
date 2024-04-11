@@ -2,7 +2,7 @@ package org.serrafit.classes;
 
 import java.time.LocalDate;
 
-public abstract class Pessoa implements InterfaceMenu{
+public abstract class Pessoa implements Menu{
 	private String nome;
 	private String cpf;
 	private LocalDate dNasc;

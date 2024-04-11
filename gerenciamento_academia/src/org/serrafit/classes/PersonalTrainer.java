@@ -3,7 +3,7 @@ package org.serrafit.classes;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class PersonalTrainer extends Pessoa{
+public class PersonalTrainer extends Pessoa {
 	private LocalTime horarioAtendimento;
 	private String cref;
 	private String especialidade;
@@ -16,8 +16,6 @@ public class PersonalTrainer extends Pessoa{
 		this.cref = cref;
 		this.especialidade = especialidade;
 	}
-
-
 
 	// Get & Set
 	public LocalTime getHorarioAtendimento() {
@@ -43,13 +41,35 @@ public class PersonalTrainer extends Pessoa{
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
 	}
-	
+
 	public void exibirMenu() {
-		System.out.println("Menu Personal Trainer");
+		var mensagem = String.format("""
+				============================================
+				         BEM VINDO - %S
+				============================================
+
+				1 - Visualizar agenda de atendimentos
+				2 - Registrar avaliações físicas dos alunos
+				3 - Visualizar lista de avaliações
+				0 - Sair
+				""", getNome());
+		System.out.println(mensagem);
 	}
-	
+
+	public void visualizarAgenda() {
+
+	}
+
+	public void registrarAvaliacao() {
+
+	}
+
+	public void visualizarListaAvaliacoes() {
+
+	}
+
 	public void selecionarOpcao() {
-		
+
 	}
 
 	// Método

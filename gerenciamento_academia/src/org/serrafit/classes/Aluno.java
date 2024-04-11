@@ -2,7 +2,7 @@ package org.serrafit.classes;
 
 import java.time.LocalDate;
 
-public class Aluno extends Pessoa{
+public class Aluno extends Pessoa {
 	private LocalDate dataMatricula;
 	private String avaliacoesFisicas;
 	private Plano plano;
@@ -20,8 +20,6 @@ public class Aluno extends Pessoa{
 	public LocalDate getDataMatricula() {
 		return dataMatricula;
 	}
-
-
 
 	public void setDataMatricula(LocalDate dataMatricula) {
 		this.dataMatricula = dataMatricula;
@@ -53,13 +51,45 @@ public class Aluno extends Pessoa{
 
 	@Override
 	public void exibirMenu() {
-		System.out.println("Menu Aluno");
+		var mensagem = String.format("""
+				============================================
+				         BEM VINDO - %S
+				============================================
+
+				1 - Visualizar dados pessoais e plano contratado
+				2 - Solicitar agendamento de horário com personal trainer;
+				3 - Visualizar hitórico de agendamentos
+				4 - Cancelar agendamento
+				5 - Visualizar avaliações físicas
+				0 - Sair
+				""", getNome());
+		System.out.println(mensagem);
+	}
+
+	public void exibeDadosPessoais() {
+
+	}
+
+	public void exibePlanoContratado() {
+
+	}
+
+	public void solicitaAgendamento() {
+
+	}
+
+	public void cancelarAgendamento() {
+
+	}
+
+	public void visualizarAvaliacoes() {
+
 	}
 
 	@Override
 	public void selecionarOpcao() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

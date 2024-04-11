@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.serrafit.classes.Aluno;
 import org.serrafit.classes.Funcionario;
-import org.serrafit.classes.Menu;
+import org.serrafit.classes.Validacao;
 import org.serrafit.classes.PersonalTrainer;
 import org.serrafit.classes.Pessoa;
 import org.serrafit.classes.Plano;
@@ -25,7 +25,7 @@ public class SistemaAcademia {
 		cadastros.add(aluno1);
 		cadastros.add(funcionario1);
 		
-		Menu.login(cadastros);
+		Validacao.login(cadastros);
 	}
 }
 
