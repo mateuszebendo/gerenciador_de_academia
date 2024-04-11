@@ -1,4 +1,4 @@
-package org.serrafir.DAO;
+package org.serrafit.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
