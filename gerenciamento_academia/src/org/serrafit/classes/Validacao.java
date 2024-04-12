@@ -1,14 +1,13 @@
 package org.serrafit.classes;
 
-import java.util.List;
 import java.util.Scanner;
 
-import org.serrafir.DAO.ValidacaoDAO;
+import org.serrafit.DAO.ValidacaoDAO;
 
 public class Validacao {
 	public static void login() {
 		boolean loginConcluido = false;
-		int usuarioLogando = 0;
+		//int usuarioLogando = 0;
 		ValidacaoDAO validacaoBD = new ValidacaoDAO();
 		String tipoUsuario = null;
 		
@@ -32,6 +31,6 @@ public class Validacao {
 		sc.close();
 
 		//Exibe um menu de acordo com a Classe de quem logou
-		exibirMenu(tipoUsuario);
+		//exibirMenu(tipoUsuario);
 	}
 }
