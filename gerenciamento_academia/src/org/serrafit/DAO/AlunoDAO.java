@@ -70,21 +70,5 @@ public class AlunoDAO{
 			return null;
 		}
 	}
-	
-	public static void main(String[] args) {
-		AlunoDAO aluno = new AlunoDAO();
-		
-		ResultSet teste = aluno.consulta("Heitor");
-		try {
-		while(teste.next()) {
-			System.out.println(teste.getString("nome"));
-			System.out.println(teste.getString("idaluno"));
-		}
-		} catch (SQLException e) {
-			System.out.println("Erro: " + e);
-		}
-		
-		aluno.cadastro("Joao", "1567678899", "1234", "229887678", LocalDate.now(), "jAluno", LocalDate.now(), "Todas", 1);
-	}
 
 }

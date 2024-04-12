@@ -47,4 +47,21 @@ public class FuncionarioDAO {
 			System.out.println("Erro: " + e);
 		}
 	}
+	
+	public ResultSet consulta(String cpf) {
+		String query = "Select * from Pessoa join Funcionario on  Pessoa.cpf = ?";
+		ResultSet resultadoConsulta = null;
+		try {
+			script = ConexaoDB.criarConexao().prepareStatement(query);
+			
+			script.setString(1, cpf);
+			
+			resultadoConsulta = script.executeQuery();
+			
+			return resultadoConsulta;
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e);
+			return null;
+		}
+	}
 }

@@ -43,11 +43,11 @@ public class ValidacaoDAO {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	}**/
+	}
 	
 	public static void main(String[] args) {
 		ValidacaoDAO valida = new ValidacaoDAO();
 		
 		System.out.println(valida.conectarUsuario("Heitor", "Bianco"));
-	}
+	}**/
 }
