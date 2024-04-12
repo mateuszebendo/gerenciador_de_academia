@@ -38,10 +38,10 @@ public class PlanoDAO {
 			
 			resultadoConsulta = script.executeQuery();
 			
-			return resultadoConsulta;
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e);
-			return null;
 		}
+		
+		return resultadoConsulta;
 	}
 }

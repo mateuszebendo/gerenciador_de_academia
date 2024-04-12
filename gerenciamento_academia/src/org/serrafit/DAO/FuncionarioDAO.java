@@ -13,7 +13,7 @@ public class FuncionarioDAO {
 						String cargo ) {
 		String queryPessoa = "INSERT INTO Pessoa (nome, cpf, senha, contato, dataNascimento, tipo) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";
-		String queryFuncionario = "INSERT INTO Funcionario (idfuncionario, cargo) VALUES (?, ?)";
+		String queryFuncionario = "INSERT INTO Funcionario (idfuncionario, cargo) VALUES (currval(Pessoa_idpessoa_seq), ?)";
 		
 		try {
 			script = ConexaoDB.criarConexao().prepareStatement(queryPessoa);
@@ -27,20 +27,10 @@ public class FuncionarioDAO {
 			
 			script.executeUpdate();
 			
-			script = ConexaoDB.criarConexao().prepareStatement("Select idPessoa from Pessoa where cpf = ?");
-					
-			ResultSet lugarIdFuncionario = script.executeQuery();
-			
-			int idFuncionario = -1;
-			
-			while(lugarIdFuncionario.next()) {
-				idFuncionario = lugarIdFuncionario.getInt("idPessoa");
-			}
 			
 			script = ConexaoDB.criarConexao().prepareStatement(queryFuncionario);
 			
-			script.setInt(1, idFuncionario);
-			script.setString(2, cargo);
+			script.setString(1, cargo);
 			
 			script.executeUpdate();
 		} catch (SQLException e) {
@@ -49,7 +39,7 @@ public class FuncionarioDAO {
 	}
 	
 	public ResultSet consulta(String cpf) {
-		String query = "Select * from Pessoa join Funcionario on  Pessoa.cpf = ?";
+		String query = "Select * from Pessoa join Funcionario on Pessoa.cpf = ?";
 		ResultSet resultadoConsulta = null;
 		try {
 			script = ConexaoDB.criarConexao().prepareStatement(query);

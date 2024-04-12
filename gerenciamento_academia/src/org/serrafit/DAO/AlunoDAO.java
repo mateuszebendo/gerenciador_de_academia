@@ -11,11 +11,11 @@ public class AlunoDAO{
 	
 	
 	public void cadastro (String nome, String cpf, String senha, String contato, LocalDate dataNascimento, String tipo, 
-			LocalDate dataMatricula, String avaliacoesFisicas, int planoContratado) {
+			LocalDate dataMatricula, int planoContratado) {
 		String queryPessoa = "INSERT INTO Pessoa (nome, cpf, senha, contato, dataNascimento, tipo) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";		
 		String queryAluno = "INSERT INTO Aluno (idaluno, datamatricula, avaliacoesfisicas, planocontratado) "
-							+ " values (?, ?, ?, ?)";
+							+ " values (currval(Pessoa_idpessoa_seq), ?, ?)";
 		try {
 			script = ConexaoDB.criarConexao().prepareStatement(queryPessoa);
 			
@@ -28,24 +28,10 @@ public class AlunoDAO{
 			
 			script.executeUpdate();
 			
-			script = ConexaoDB.criarConexao().prepareStatement("SELECT idPessoa FROM Pessoa where cpf = ?");
-			
-			script.setString(1, cpf);
-			
-			ResultSet lugarIdAluno = script.executeQuery();
-			
-			int idAluno = -1;
-			
-			while(lugarIdAluno.next()) {
-				idAluno = lugarIdAluno.getInt("idpessoa");
-			}
-			
 			script = ConexaoDB.criarConexao().prepareStatement(queryAluno);
 			
-			script.setInt(1, idAluno);
-			script.setDate(2, Date.valueOf(dataMatricula));
-			script.setString(3, avaliacoesFisicas);
-			script.setInt(4, planoContratado);
+			script.setDate(1, Date.valueOf(dataMatricula));
+			script.setInt(2, planoContratado);
 			
 			script.executeUpdate();
 			
