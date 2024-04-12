@@ -4,17 +4,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
+import java.time.LocalDate;
 
 public class AlunoDAO{
 	PreparedStatement script = null;
 	
 	
-	public void cadastro (String nome, String cpf, String senha, String contato, Date dataNascimento, String tipo, 
-							Time dataMatricula, String avalicoesFisicas, int planoContratado) {
+	public void cadastro (String nome, String cpf, String senha, String contato, LocalDate dataNascimento, String tipo, 
+			LocalDate dataMatricula, String avaliacoesFisicas, int planoContratado) {
 		String queryPessoa = "INSERT INTO Pessoa (nome, cpf, senha, contato, dataNascimento, tipo) "
 				+ "VALUES (?, ?, ?, ?, ?, ?)";		
-		String queryAluno = "INSERT INTO Aluno (idaluno, datamatricula, avalicoesfisicas, planocontratado) "
+		String queryAluno = "INSERT INTO Aluno (idaluno, datamatricula, avaliacoesfisicas, planocontratado) "
 							+ " values (?, ?, ?, ?)";
 		try {
 			script = ConexaoDB.criarConexao().prepareStatement(queryPessoa);
@@ -23,7 +23,7 @@ public class AlunoDAO{
 			script.setString(2, cpf);
 			script.setString(3, senha);
 			script.setString(4, contato);
-			script.setDate(5, dataNascimento);
+			script.setDate(5, Date.valueOf(dataNascimento));
 			script.setString(6, tipo);
 			
 			script.executeUpdate();
@@ -37,15 +37,17 @@ public class AlunoDAO{
 			int idAluno = -1;
 			
 			while(lugarIdAluno.next()) {
-				idAluno = lugarIdAluno.getInt("idAluno");
+				idAluno = lugarIdAluno.getInt("idpessoa");
 			}
 			
 			script = ConexaoDB.criarConexao().prepareStatement(queryAluno);
 			
 			script.setInt(1, idAluno);
-			script.setTime(2, dataMatricula);
-			script.setString(3, avalicoesFisicas);
+			script.setDate(2, Date.valueOf(dataMatricula));
+			script.setString(3, avaliacoesFisicas);
 			script.setInt(4, planoContratado);
+			
+			script.executeUpdate();
 			
 		} catch (SQLException e){
 			System.out.println("Erro: " + e);
@@ -69,7 +71,7 @@ public class AlunoDAO{
 		}
 	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		AlunoDAO aluno = new AlunoDAO();
 		
 		ResultSet teste = aluno.consulta("Heitor");
@@ -81,6 +83,8 @@ public class AlunoDAO{
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e);
 		}
-	}**/
+		
+		aluno.cadastro("Joao", "1567678899", "1234", "229887678", LocalDate.now(), "jAluno", LocalDate.now(), "Todas", 1);
+	}
 
 }
