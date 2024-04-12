@@ -10,8 +10,7 @@ public class Agendamento {
 	private LocalDate data;
 
 	// Construtor
-	public Agendamento(LocalTime horario, Aluno aluno, PersonalTrainer personal, LocalDate data) {
-		super();
+	public Agendamento(LocalTime horario, Aluno aluno, PersonalTrainer personal, LocalDate data) {		
 		this.horario = horario;
 		this.aluno = aluno;
 		this.personal = personal;
@@ -49,7 +48,7 @@ public class Agendamento {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
-
+	@Override
 	public String toString() {
 		return String.format("""
 				Horario Agendado: %s

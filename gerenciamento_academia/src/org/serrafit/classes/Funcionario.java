@@ -72,10 +72,5 @@ public class Funcionario extends Pessoa {
 
 	}
 
-	@Override
-	public void selecionarOpcao() {
-		// TODO Auto-generated method stub
-
-	}
 
 }
