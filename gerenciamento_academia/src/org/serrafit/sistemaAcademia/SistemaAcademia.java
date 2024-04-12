@@ -25,7 +25,7 @@ public class SistemaAcademia {
 		cadastros.add(aluno1);
 		cadastros.add(funcionario1);
 		
-		Validacao.login(cadastros);
+		Validacao.login();
 	}
 }
 
