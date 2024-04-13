@@ -5,11 +5,11 @@ import java.util.Scanner;
 import org.serrafit.DAO.ValidacaoDAO;
 
 public class Validacao {
-	public static void login() {
+	public static Menu login() {
 		boolean loginConcluido = false;
-		//int usuarioLogando = 0;
 		ValidacaoDAO validacaoBD = new ValidacaoDAO();
 		String tipoUsuario = null;
+		Menu menu = null;
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -20,17 +20,20 @@ public class Validacao {
 			System.out.println("Insira sua Senha: ");
 			String validaSenha = sc.next();
 			
-			//Verifica CPF inserido
+			//Verifica CPF e Senha inseridos
 			tipoUsuario = validacaoBD.conectarUsuario(validaCPF, validaSenha);
 			if(tipoUsuario != null) {
 				loginConcluido = true;
+				
 			}
 			sc.nextLine();
 		}while(loginConcluido == false);
 		
 		sc.close();
-
-		//Exibe um menu de acordo com a Classe de quem logou
-		//exibirMenu(tipoUsuario);
+		
+		if(tipoUsuario.equalsIgnoreCase("Funcionario")) {
+			menu = new MenuFuncionario();
+		}
+		return menu;
 	}
 }

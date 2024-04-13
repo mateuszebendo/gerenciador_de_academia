@@ -9,7 +9,6 @@ public abstract class Pessoa implements Menu{
 	private String contato;
 	private String senha;
 
-	// Construtor
 	public Pessoa(String nome, String cpf, LocalDate dNasc, String contato, String senha) {
 		this.nome = nome;
 		this.cpf = cpf;

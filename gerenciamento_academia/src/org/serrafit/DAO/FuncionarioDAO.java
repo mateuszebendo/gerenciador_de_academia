@@ -8,12 +8,12 @@ import java.time.LocalDate;
 
 public class FuncionarioDAO {
 	PreparedStatement script = null; 
+	ResultSet rs = null;
+	int idpessoa = 0;
 	
-	public void cadastro(String nome, String cpf, String senha, String contato, LocalDate dataNascimento, String tipo,
-						String cargo ) {
+	public void cadastro(String nome, String cpf, String senha, String contato, LocalDate dataNascimento, String cargo) {
 		String queryPessoa = "INSERT INTO Pessoa (nome, cpf, senha, contato, dataNascimento, tipo) "
-				+ "VALUES (?, ?, ?, ?, ?, ?)";
-		String queryFuncionario = "INSERT INTO Funcionario (idfuncionario, cargo) VALUES (currval(Pessoa_idpessoa_seq), ?)";
+				+ "VALUES (?, ?, ?, ?, ?, 'Funcionario') returning idpessoa";
 		
 		try {
 			script = ConexaoDB.criarConexao().prepareStatement(queryPessoa);
@@ -23,16 +23,26 @@ public class FuncionarioDAO {
 			script.setString(3, senha);
 			script.setString(4, contato);
 			script.setDate(5, Date.valueOf(dataNascimento));
-			script.setString(6, tipo);
 			
-			script.executeUpdate();
+			rs = script.executeQuery();
 			
-			
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e);
+		}
+		
+		String queryFuncionario = "INSERT INTO Funcionario (idfuncionario, cargo) VALUES (?, ?)";
+		
+		try {
+			while(rs.next()) {
+				idpessoa = rs.getInt("idpessoa");
+			}
 			script = ConexaoDB.criarConexao().prepareStatement(queryFuncionario);
 			
-			script.setString(1, cargo);
+			script.setInt(1, idpessoa);
+			script.setString(2, cargo);
 			
 			script.executeUpdate();
+			script.close();
 		} catch (SQLException e) {
 			System.out.println("Erro: " + e);
 		}
@@ -53,5 +63,11 @@ public class FuncionarioDAO {
 			System.out.println("Erro: " + e);
 			return null;
 		}
+	}
+	
+	public static void main(String[] args) {
+		//FuncionarioDAO funcionario1 = new FuncionarioDAO();
+		
+		//funcionario1.cadastro("Arnaldo","111.222.333-44","123456","22999991111",LocalDate.of(2003, 4, 2),"Gerente");
 	}
 }
