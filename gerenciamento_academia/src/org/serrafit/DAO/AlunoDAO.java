@@ -2,31 +2,76 @@ package org.serrafit.DAO;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.serrafit.classes.Aluno;
+
 public class AlunoDAO{
-	PreparedStatement script = null;
+	static PreparedStatement script = null;
+	static ResultSet resultado = null;
 	
-	
-	public void cadastro (String nome, String cpf, String senha, String contato, Date dataNascimento) {
-		String query = "INSERT INTO Pessoa VALUES ( ?, ?, ?, ?, ?)";
+	static public void cadastro (Aluno aluno) {
+		String queryPessoa = "INSERT INTO Pessoa (nome, cpf, senha, contato, dataNascimento, tipo) "
+				+ "VALUES (?, ?, ?, ?, ?, 'Aluno') returning idPessoa";		
 		try {
-			script = ConexaoDB.criarConexao().prepareStatement(query);
+			script = ConexaoDB.criarConexao().prepareStatement(queryPessoa);
 			
-			script.setString(1, nome);
-			script.setString(2, cpf);
-			script.setString(3, senha);
-			script.setString(4, contato);
-			script.setDate(5, dataNascimento);
+			script.setString(1, aluno.getNome());
+			script.setString(2, aluno.getCpf());
+			script.setString(3, aluno.getSenha());
+			script.setString(4, aluno.getContato());
+			script.setDate(5, Date.valueOf(aluno.getdNasc()));
 			
-			script.executeUpdate();
+			resultado = script.executeQuery();
+			
 		} catch (SQLException e){
 			System.out.println("Erro: " + e);
 		}
-	}
-
-	public void consulta() {
 		
+		String queryAluno = "INSERT INTO Aluno (idaluno, datamatricula, planocontratado) "
+				+ " values (?, ?, ?, ?)";
+		
+		try {
+			int idAluno = 0;
+			while(resultado.next()) {
+				idAluno = resultado.getInt("idaluno");
+			}
+			
+			script = ConexaoDB.criarConexao().prepareStatement(queryAluno);
+			
+			resultado = PlanoDAO.consulta(aluno.getPlano().getNome());
+			
+			int idPlano = resultado.getInt("idplano");
+			
+			script.setInt(1, idAluno);
+			script.setDate(2, Date.valueOf(aluno.getDataMatricula()));
+			script.setInt(3, idPlano);
+			
+			script.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e);
+		}
+			
+}
+
+	static public ResultSet consulta(String cpf) {
+		String query = "Select * from Pessoa join Aluno on  Pessoa.cpf = ?";
+		ResultSet resultadoConsulta = null;
+		try {
+			script = ConexaoDB.criarConexao().prepareStatement(query);
+			
+			script.setString(1, cpf);
+			
+			resultadoConsulta = script.executeQuery();
+			
+			
+			return resultadoConsulta;
+		} catch (SQLException e) {
+			System.out.println("Erro: " + e);
+			return null;
+		}
 	}
 
 }
