@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ValidacaoDAO {
-	PreparedStatement script = null;
+	static PreparedStatement script = null;
   
-	public String conectarUsuario(String cpf, String senha) {
+	public static String conectarUsuario(String cpf, String senha) {
         ResultSet usuarioConectado = null;
         try {
         	String query = "SELECT tipo FROM Pessoa WHERE cpf = ? and senha = ?";
@@ -34,20 +34,4 @@ public class ValidacaoDAO {
             return null;
         }
     }
-	
-	/*public void coringa () {
-		String query = "alter table pessoa add column tipo varchar(250)"; 
-		try {
-			PreparedStatement ps = conexao.prepareStatement(query);
-			ps.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}**/
-	
-	public static void main(String[] args) {
-		ValidacaoDAO valida = new ValidacaoDAO();
-		
-		System.out.println(valida.conectarUsuario("Heitor", "Bianco"));
-	}
 }
