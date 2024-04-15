@@ -10,9 +10,9 @@ public class Aluno extends Pessoa {
 	private LocalDate dataMatricula;
 	private String avaliacoesFisicas;
 	private Plano plano;
-	
+
 	Scanner sc = new Scanner(System.in);
-	
+
 	// Construtor
 	public Aluno(String nome, String cpf, LocalDate dNasc, String contato, String senha, LocalDate dataMatricula,
 			String avaliacoesFisicas, Plano plano) {
@@ -47,7 +47,6 @@ public class Aluno extends Pessoa {
 		this.plano = plano;
 	}
 
-	
 	@Override
 	public void exibirMenu() {
 		int opcao = -1;
@@ -65,16 +64,16 @@ public class Aluno extends Pessoa {
 					0 - Sair
 					""", getNome());
 			System.out.println(mensagem);
-			
+
 			opcao = sc.nextInt();
 			sc.nextLine();
-			switch(opcao) {
-			case 1 :
+			switch (opcao) {
+			case 1:
 				exibeDadosPessoais();
 				exibePlanoContratado();
 				voltarMenu();
 				break;
-			case 2: 
+			case 2:
 				solicitaAgendamento();
 				voltarMenu();
 				break;
@@ -96,7 +95,7 @@ public class Aluno extends Pessoa {
 			default:
 				System.out.println("Opção inválida. Por gentileza, selecione uma opção válida");
 			}
-			
+
 		} while (opcao != 0);
 	}
 
@@ -112,7 +111,7 @@ public class Aluno extends Pessoa {
 				Data de matrícula: %s
 				""", getNome(), getCpf(), getdNasc(), getContato(), dataMatricula);
 		System.out.println(mensagem);
-		
+
 	}
 
 	public void exibePlanoContratado() {
@@ -120,72 +119,109 @@ public class Aluno extends Pessoa {
 				--------------------------
 				PLANO CONTRATADO
 				--------------------------
-				Plano: %s				
+				Plano: %s
 				""", plano);
-		System.out.println(mensagem);
+		System.out.println(mensagem);		
 	}
 
 	public void solicitaAgendamento() {
-		System.out.println("\nSOLICITAR AGENDAMENTO\n");
+		// Criando um novo agendamento
+		var mensagem = String.format("""
+				==========================
+				 SOLICITANDO AGENDAMENTO
+				==========================
+				""");
+		System.out.println(mensagem);	;
 		System.out.println("Infome o horário desejado (formato HH:MM): ");
 		String horarioInformado = sc.nextLine();
 		LocalTime horario = LocalTime.parse(horarioInformado);
-		
-		//Mostrar a lista de personais disponíveis.
-		System.out.println("Insira o nome do personal desejado: ");		
+
+		// Mostrar a lista de personais disponíveis.
+		System.out.println("Insira o nome do personal desejado: ");
 		String nomePersonal = sc.nextLine();
-		//PersonalTrainer personal = encontrarPersonalPeloNome(nomePersonal);
-		//Verifica se o personal esta de fato disponível, se sim, cria agendamento
-		
-		System.out.println();
-		
+		encontrarPersonalPeloNome(nomePersonal, null);
+		// PersonalTrainer personal = encontrarPersonalPeloNome(nomePersonal);
+		// Verifica se o personal esta de fato disponível, se sim, cria agendamento
+		System.out.println("Insira a data (Formato AAAA-MM-DD): ");
+		String dataInformada = sc.nextLine();
+		LocalDate data = LocalDate.parse(dataInformada);		
+
 	}
-	public void visualizarAgendamentos() {
-		System.out.println("Visualie o histórico de agendamentos");
+
+	public void visualizarAgendamentos(List<Agendamento> agenda) {
+		var mensagem = String.format("""
+				==========================
+				      AGENDAMENTOS
+				==========================
+				""");
+		System.out.println(mensagem);		
+		for (Agendamento agendamento : agenda) {
+			if (agendamento != null) {
+				System.out.println(agendamento);
+			} else {
+				System.out.println("Sem agendamentos registrados!");
+			}
+		}
+
 	}
 
 	public void cancelarAgendamento() {
-		System.out.println("Cancele o seu agendamento");
+		var mensagem = String.format("""
+				==========================
+				   CANCELAR AGENDAMENTO
+				==========================
+				""");
+		System.out.println(mensagem);	
+
 	}
 
-	public void visualizarAvaliacoes() {
-		System.out.println("Visualize o seu histórico de Avaliações");
+	public void visualizarAvaliacoes(List<Avaliacao> avaliacoes) {
+		var mensagem = String.format("""
+				==========================
+				      AVALIAÇÕES
+				==========================
+				""");
+		System.out.println(mensagem);	
+		for (Avaliacao avaliacao : avaliacoes) {
+			if (avaliacao != null) {
+				System.out.println(avaliacao);
+			} else {
+				System.out.println("Sem histórico de avaliações!");
+			}
+		}
 	}
+
 	public void sairMenu() {
 		System.out.println("Saindo do Sistema");
 		System.exit(0);
 	}
-	
+
 	public void voltarMenu() {
 		System.out.println("Deseja votar ao Menu: S - sim | N - não");
 		String resposta = sc.nextLine();
-		if(!resposta.equalsIgnoreCase("s")) {
+		if (!resposta.equalsIgnoreCase("s")) {
 			sairMenu();
 		}
 	}
 	
-//	private PersonalTrainer encontrarPersonalPeloNome(String nome, List<Pessoa> lista) {
-//		for (int i = 0; i < lista.size(); i++) {
-//			if (lista.get(i).getNome().equals(nome)) {
-//				String personalEncontrado =lista.get(i).getNome();
-//				return 
-//			}
-//		}
-//		return null;
-//	}
-	
-	
 
-	
+	private PersonalTrainer encontrarPersonalPeloNome(String nome, List<Pessoa> cadastros) {
+		for (Pessoa personal : cadastros) {
+			if (personal instanceof PersonalTrainer && personal.getNome().equals(nome)) {
+				return (PersonalTrainer) personal;
+			}
+		}
+		return null;
+	}
+
 	public String toString() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        return super.toString() + String.format("""
-                Data Matricula: %s
-                Avaliação Física: %s
-                Plano: %s
-                """, dataMatricula.format(dtf), avaliacoesFisicas, plano);
+		return super.toString() + String.format("""
+				Data Matricula: %s
+				Avaliação Física: %s
+				Plano: %s
+				""", dataMatricula.format(dtf), avaliacoesFisicas, plano);
 	}
-
 
 }
