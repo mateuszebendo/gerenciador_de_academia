@@ -24,5 +24,4 @@ public class Funcionario extends Pessoa {
 				Cargo: %s
 				""", cargo);
 	}
-
 }

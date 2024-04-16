@@ -55,10 +55,11 @@ public class PersonalTrainer extends Pessoa {
 
 	public String toString() {
 		return String.format("""
+				Nome do Personal: %s
 				Início do Atendimento: %s
 				Fim do Atendimento: %s
 				CREF: %s
 				Especialidade: %s
-				""", inicioAtendimento, fimAtendimento, cref, especialidade);
+				""", this.getNome(), inicioAtendimento, fimAtendimento, cref, especialidade);
 	}
 }
