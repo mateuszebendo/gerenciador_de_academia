@@ -13,18 +13,21 @@ import org.serrafit.classes.Avaliacao;
 import org.serrafit.classes.PersonalTrainer;
 import org.serrafit.classes.Pessoa;
 import org.serrafit.service.Registra;
+import org.serrafit.service.ValidacaoAluno;
 
 public class MenuAluno implements Menu {
 	Aluno aluno = null;	
 	
 	List<PersonalTrainer> personais = new ArrayList<PersonalTrainer>();
 	List<Agendamento> agendamentos = new ArrayList<Agendamento>();
+	List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 		
 	public MenuAluno(Aluno aluno) {
 		super();
 		this.aluno = aluno;
 		this.personais = Registra.criaPersonais();
 		this.agendamentos = Registra.criaAgendamento();
+		this.avaliacoes = Registra.criaAvaliacao();
 	}
 	
 	@Override
@@ -52,19 +55,18 @@ public class MenuAluno implements Menu {
 			case 1:
 				exibeDadosPessoais();
 				exibePlanoContratado();
-				voltarMenu(sc);
 				break;
 			case 2:
 				solicitaAgendamento(sc, personais, agendamentos);
 				break;
 			case 3:
-				//visualizarAgendamentos();
+				visualizarAgendamentos(agendamentos);
 				break;
 			case 4:
-				cancelarAgendamento();
+				cancelarAgendamento(sc, agendamentos);
 				break;
 			case 5:
-				//visualizarAvaliacoes();
+				visualizarAvaliacoes(avaliacoes);
 				break;
 			case 0:
 				sairMenu();
@@ -104,6 +106,7 @@ public class MenuAluno implements Menu {
 	public void solicitaAgendamento(Scanner sc, List<PersonalTrainer> listaPersonal, List<Agendamento> listaAgendamento) {
 		LocalTime horario = null;
 		LocalDate data = null;
+		PersonalTrainer personalSelecionado = null;
 		
 		var mensagem = String.format("""
 				==========================
@@ -111,81 +114,68 @@ public class MenuAluno implements Menu {
 				==========================
 				""");
 		System.out.println(mensagem);	
-		
-		// o solicitaAgendamento tem que captar horario e data e ver quais personais atendem naquele horario escolhido e checar se o personal ja tem um agendamento para aquela hora e data
-			System.out.println("Informe o horário desejado (formato HH:mm): ");
-			String horarioInformado = sc.nextLine();
-			horario = LocalTime.parse(horarioInformado);
 			
-			System.out.println("Insira a data (Formato AAAA-MM-DD): ");
-			String dataInformada = sc.next();
-			data = LocalDate.parse(dataInformada);
+			horario = ValidacaoAluno.validaHorario(sc);
 			
-			for(int i = 0; i < listaPersonal.size(); i++) {
-				if(listaPersonal.get(i).getInicioAtendimento().isBefore(horario) && listaPersonal.get(i).getFimAtendimento().isAfter(horario)) {
-					System.out.println(listaPersonal.get(i));
-				}
-			}
+			data = ValidacaoAluno.validaData(sc);
 			
-			System.out.println("Informe o Personal desejado pelo CREF: ");
-			String crefSelecionado = sc.next();
+			System.out.println("\nPersonais que trabalham no horário: \n");
+			ValidacaoAluno.verificarPersonalDisponivel(listaPersonal, horario);
 			
-			PersonalTrainer personalSelecionado = encontrarPersonalPeloCref(crefSelecionado, listaPersonal);
+			personalSelecionado = ValidacaoAluno.selecionaPersonal(listaPersonal, sc);
 			
-			Agendamento agendamento = new Agendamento(horario, this.aluno, personalSelecionado, data);
-			Registra.adicionaAgendamentoUnico(agendamento);
+			Registra.adicionaAgendamentoUnico(new Agendamento(horario, this.aluno, personalSelecionado, data));
 			System.out.println("Agendamento concluido!");
-			
-			
-			
 	    }
-	
-	private PersonalTrainer encontrarPersonalPeloCref(String cref, List<PersonalTrainer> personais) {
-		for (PersonalTrainer personal : personais) {
-			if (personal instanceof PersonalTrainer && personal.getCref().equals(cref)) {
-				return personal;
-			}
-		}
-		return null;
-	}
 
 	public void visualizarAgendamentos(List<Agendamento> agenda) {
+		boolean continuar = false;
 		var mensagem = String.format("""
 				==========================
 				      AGENDAMENTOS
 				==========================
 				""");
 		System.out.println(mensagem);		
-		for (Agendamento agendamento : agenda) {
-			if (agendamento != null) {
-				System.out.println(agendamento);
-			} else {
-				System.out.println("Sem agendamentos registrados!");
+
+		for (int i = 0; i < agenda.size(); i++) {
+			if (agenda.get(i).getAluno().getCpf() == aluno.getCpf()) {
+				System.out.println(agenda.get(i));
+				continuar = true;
+			} else if(continuar == false && i == agenda.size() - 1){
+				System.out.println("Sem agendamentos registrados!\n");
 			}
 		}
 	}
 
-	public void cancelarAgendamento() {
+	public void cancelarAgendamento(Scanner sc, List<Agendamento> agenda) {
 		var mensagem = String.format("""
 				==========================
 				   CANCELAR AGENDAMENTO
 				==========================
 				""");
-		System.out.println(mensagem);	
+		System.out.println(mensagem);
+		
+		visualizarAgendamentos(agendamentos);
+		
+		ValidacaoAluno.removeAgendamento(sc, agenda);
+		
 	}
 
 	public void visualizarAvaliacoes(List<Avaliacao> avaliacoes) {
+		boolean continuar = false;
 		var mensagem = String.format("""
 				==========================
 				      AVALIAÇÕES
 				==========================
 				""");
+		
 		System.out.println(mensagem);	
-		for (Avaliacao avaliacao : avaliacoes) {
-			if (avaliacao != null) {
-				System.out.println(avaliacao);
-			} else {
-				System.out.println("Sem histórico de avaliações!");
+		for (int i = 0; i < avaliacoes.size(); i++) {
+			if (avaliacoes.get(i).getAluno().getCpf() == aluno.getCpf()) {
+				System.out.println("Aluno: " + aluno.getNome() + "\nPersonal: " + avaliacoes.get(i).getPersonal().getNome() + "\nDescrição: " + avaliacoes.get(i).getDescricao() + "\nData da avaliação: " + avaliacoes.get(i).getData() + "\n");
+				continuar = true;
+			} else if(continuar == false && i == avaliacoes.size() - 1){
+				System.out.println("Sem Avaliações registradas!\n");
 			}
 		}
 	}
@@ -193,28 +183,5 @@ public class MenuAluno implements Menu {
 	public void sairMenu() {
 		System.out.println("Saindo do Sistema");
 		System.exit(0);
-	}
-
-	public void voltarMenu(Scanner sc) {
-		String voltar;
-		boolean voltarAoMenu = false; 
-		
-		do {
-			System.out.print("Deseja voltar ao Menu: S - sim | N - não");
-			voltar = sc.nextLine().trim(); // remove espaços em branco antes e depois da entrada
-
-		switch (voltar.toUpperCase()) {
-		case "S":
-			this.exibirMenu(sc);
-			voltarAoMenu = true;
-			break;
-		case "N":
-			sairMenu();
-			break;
-		default:
-			System.out.println("Opção inválida. Por favor, escolha 'S' para sim ou 'N' para não.");
-		}
-		
-		} while (!voltar.equalsIgnoreCase("S") && !voltar.equalsIgnoreCase("N")); // enqnt voltar for diferente de s ou n ele repete a funçao
 	}
 }

@@ -37,12 +37,13 @@ public class Aluno extends Pessoa {
 	}
 
 	public String toString() {
+
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return super.toString() + String.format("""
 				Data Matricula: %s
 				Avaliação Física: %s
 				Plano: %s
-				""", dataMatricula.format(dtf), avaliacoesFisicas, plano);
+				""", dataMatricula.format(dtf), (avaliacoesFisicas == null ? "Não há avaliações registradas!" : getAvaliacoesFisicas()), plano);
 	}
 
 }

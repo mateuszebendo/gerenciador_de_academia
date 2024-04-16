@@ -15,14 +15,16 @@ public class ValidacaoPersonal {
 		
 		while(true) {
 			System.out.println("Insira apenas os numeros do CREF: ");
-			numCref = sc.nextLine();
+			numCref = sc.next();
 			
 			Pattern pattern = Pattern.compile("^\\d{1,5}$");
             Matcher matcher = pattern.matcher(numCref);
             
             if(matcher.matches()) {
             	 return "CREF-" + numCref;
-            }   
+            } else {
+            	System.out.println("Cref inválido, insira novamente!");
+            }
 		}
 	}
 	
@@ -30,17 +32,17 @@ public class ValidacaoPersonal {
 		String regex = "^(0[5-9]|1\\d|2[0-3]):[0-5]\\d$";
         boolean horarioValido = false;
         LocalTime inicio = null;
+        String horarioTexto = null;
 
         while (!horarioValido) {
-            System.out.println("Início do Atendimento: \n [05h00 AM-23h00 PM]\n");
-
+            System.out.println("Início do Atendimento: \n [05:00 AM - 23:00 PM]\n");
+            horarioTexto = sc.next();
             try {
-                String horarioTexto = sc.nextLine();
                 if (Pattern.matches(regex, horarioTexto)) {
                     inicio = LocalTime.parse(horarioTexto);
                     horarioValido = true;
                 } else {
-                    System.out.println("Horário inválido, digite um horário entre [05h00 AM-23h00 PM]");
+                    System.out.println("Horário inválido, digite um horário entre [05:00 AM - 23:00 PM]");
                 }
             } catch (Exception e) {
                 System.out.println("Erro ao processar o horário: " + e.getMessage());
@@ -57,8 +59,8 @@ public class ValidacaoPersonal {
 
         while (finalAtendimento == null || finalAtendimento.isBefore(inicioAtendimento.plusHours(1))) {
             System.out.println("Fim do Atendimento: \n[min: 1h de distancia do Inicio]:");
+            String horarioTexto = sc.next();
             try {
-            String horarioTexto = sc.nextLine();
             if (Pattern.matches(regex, horarioTexto)) {
             	finalAtendimento = LocalTime.parse(horarioTexto);
                 horarioValido = true;
@@ -74,15 +76,15 @@ public class ValidacaoPersonal {
     }
 	
 	public static Aluno validaAlunoExistente(Scanner sc, List <Aluno> listaAlunos) throws InterruptedException {
-		String cpf = ValidacaoPessoa.validaCpf(sc);
+		String cpf = null;
 		while (true) {
-            System.out.println("CPF do Aluno: ");
-
+            cpf = ValidacaoPessoa.validaCpf(sc);
+            
             Aluno alunoAvaliacao = null;
             for (Aluno aluno : listaAlunos) {
                 if (cpf.equals(aluno.getCpf())) {
                     alunoAvaliacao = aluno;
-                    System.out.println("Aluno encontrado!");
+                    System.out.println("Aluno " + aluno.getNome() + " encontrado!");
                     return alunoAvaliacao;
                 }
             }

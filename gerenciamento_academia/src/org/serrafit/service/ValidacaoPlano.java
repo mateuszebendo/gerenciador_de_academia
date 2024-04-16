@@ -13,10 +13,14 @@ public class ValidacaoPlano {
 		String nomePlano = null;
 		
 		while(!verificacao) {
-		System.out.print("Planos Disponiveis: ");
-	    System.out.println(listaPlanos);
+		System.out.print("Planos Disponiveis: \n");
+	    
+		for (int i = 0; i < listaPlanos.size(); i++) {
+			System.out.println("Nome do plano: " + listaPlanos.get(i).getNome() + "\nValor: R$" + listaPlanos.get(i).getValor() + "\nDescrição: " + listaPlanos.get(i).getDescricao() + "\nDuração: " + listaPlanos.get(i).getDuracao() + " meses\n");
+		}
+		
 	    System.out.println("Digite o nome do plano desejado - ");
-	    nomePlano = sc.nextLine();
+	    nomePlano = sc.next();
 	    
 		    for(Plano plano: listaPlanos) {
 		    	if(nomePlano.equalsIgnoreCase(plano.getNome())) verificacao = true;
@@ -60,12 +64,37 @@ public class ValidacaoPlano {
 	}
 	
 	public static String validaDescricao(Scanner sc) {
-		String descricao = null;
+		String descricao = "";
 		do {
 			System.out.println("Digite uma descrição: \n(máx: 200 caracteres)");
-			descricao = sc.nextLine();
+			while(descricao.isEmpty()) {
+				descricao = sc.nextLine();
+			}
+			
 			if(descricao.length() <= 200) return descricao;
 			else System.out.println("Descrição muito longa - Máx: 200 caracteres");
 		}while(true);
+	}
+	
+	public static String validaNomePlano (Scanner sc, List <Plano> listaPlanos) throws InterruptedException {
+		boolean verificacao = false;
+		String nomePlano = "";
+		
+		do {
+	    System.out.println("Digite o nome do plano desejado - ");
+	    while(nomePlano.isEmpty()) {
+	    	nomePlano = sc.nextLine();
+	    }
+	    
+		    for (int i = 0; i < listaPlanos.size(); i++) {
+		    	if(nomePlano.equalsIgnoreCase(listaPlanos.get(i).getNome())) {
+		    		System.out.println("Esse plano ja existe!");
+		    	} else if(verificacao == false && i == listaPlanos.size() - 1) {
+		    		return nomePlano;
+		    	}
+			}
+	    }while(!verificacao);
+		
+		return nomePlano;
 	}
 }

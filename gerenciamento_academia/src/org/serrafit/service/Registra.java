@@ -10,9 +10,11 @@ import org.serrafit.classes.Aluno;
 import org.serrafit.classes.Avaliacao;
 import org.serrafit.classes.Funcionario;
 import org.serrafit.classes.PersonalTrainer;
+import org.serrafit.classes.Pessoa;
 import org.serrafit.classes.Plano;
 
 public class Registra {
+	static List<Pessoa> cadastros = new ArrayList<>();
     static List<Aluno> alunos = new ArrayList<>();
     static List<Agendamento> agendamentos = new ArrayList<>();
     static List<PersonalTrainer> personais = new ArrayList<>();
@@ -59,9 +61,16 @@ public class Registra {
         funcionarios.add(funcionario2);
         return funcionarios;
     }
-
-    public static void adicionaAgendamentoUnico(Agendamento agendamento) {
-        agendamentos.add(agendamento);
+    
+    public static List<Pessoa> criaCadastros(){
+    	cadastros.add(personal1);
+    	cadastros.add(personal2);
+    	cadastros.add(personal3);
+    	cadastros.add(aluno1);
+    	cadastros.add(aluno2);
+    	cadastros.add(funcionario1);
+    	cadastros.add(funcionario2);
+    	return cadastros;
     }
 
     public static List<Agendamento> criaAgendamento() {
@@ -82,4 +91,18 @@ public class Registra {
         personais.add(personal3);
         return personais;
     }
+    
+    public static void deletaAgendamento(int remover){
+    	agendamentos.remove(remover);
+    }
+    
+    public static void adicionaAgendamentoUnico(Agendamento agendamento) {
+        agendamentos.add(agendamento);
+    }
+    
+    public static void adicionaAvaliacaoUnica(Avaliacao avaliacao) {
+        avaliacoes.add(avaliacao);
+    }
+
+
 }

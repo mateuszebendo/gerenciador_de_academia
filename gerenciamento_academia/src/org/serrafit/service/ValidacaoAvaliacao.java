@@ -13,7 +13,7 @@ public class ValidacaoAvaliacao {
 	    
 	    while (!dataCorreta) {
 	        System.out.println("Data do Agendamento(dd-MM-yyyy): ");
-	        dataAvaliacao = sc.nextLine();
+	        dataAvaliacao = sc.next();
 	        
 	        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	        

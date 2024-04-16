@@ -9,12 +9,14 @@ import java.util.regex.Pattern;
 public class ValidacaoPessoa {
 	
 	public static String validaNome(Scanner sc) throws InterruptedException {
-		String nome;
+		String nome = "";
 		Pattern padrao = Pattern.compile("^[a-zA-ZÀ-ÿ]+(\\s+[a-zA-ZÀ-ÿ]+)*$");
         Matcher comparador = null;
         while (true) {
             System.out.println("Digite o nome: ");
-            nome = sc.nextLine();
+            while(nome.isEmpty()) {
+            	nome = sc.nextLine();	
+            }
 
             comparador = padrao.matcher(nome);
 
@@ -23,19 +25,20 @@ public class ValidacaoPessoa {
             } else if (!(comparador.matches())) {
                 System.out.println("Nome inválido. Use apenas letras e espaços.");
                 Thread.sleep(1000);
-            }
+                nome = "";
+                }
         }
         return nome;
     }
 	
 	public static String validaCpf(Scanner sc) throws InterruptedException {
-    	String cpf = "";
     	String cpfFinal = "";
     	boolean cpfCorreto = false;
     	while(!cpfCorreto) {
-	        System.out.print("Digite o CPF: ");
-	        cpf = sc.nextLine();
-	        cpfFinal = cpf.replaceAll("[^0-9]", "");
+    		System.out.println("CPF do usuário: ");
+            String cpfInserido = sc.nextLine();
+            
+	        cpfFinal = cpfInserido.replaceAll("[^0-9]", "");
 
 	        if (cpfFinal.length() != 11) {
 	        	System.out.println("CPF INVALIDO! Digite novamente!");
@@ -55,7 +58,8 @@ public class ValidacaoPessoa {
 		
 		while(!dataCorreta) {
 			System.out.println("Digite a Data de Nascimento: (no formato dd-MM-yyyy) ");
-			dataNascimento = sc.nextLine();
+
+			dataNascimento = sc.next();
 			
 			DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			
@@ -82,7 +86,8 @@ public class ValidacaoPessoa {
 		String telefoneFormat = "";
 		while(quebra == true) {
 			System.out.println("Telefone 9 digitos ( apenas numero): ");
-			String telefone = sc.nextLine();
+			sc.nextLine();
+			String telefone = sc.next();
 			if(telefone.length() == 9) {
 				if (Pattern.matches(telefoneRegex, telefone)) {
 					telefoneFormat = telefone.replaceAll("(\\d{5})(\\d{4})", "$1-$2");
@@ -104,7 +109,8 @@ public class ValidacaoPessoa {
     	
     	while(!senhaOK) {
     		System.out.println("Digite uma senha de até 10 digitos: ");
-    		senha = sc.nextLine();
+    		sc.nextLine();
+    		senha = sc.next();
     		if (senha.length() > 10) {
 	        	System.out.println("Senha muito longa! Digite novamente!");
 	        	Thread.sleep(1000);

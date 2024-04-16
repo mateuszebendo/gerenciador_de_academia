@@ -56,7 +56,7 @@ public class Avaliacao {
 				Personal Trainer: %s
 				Descrição: %s
 				Data da Avaliação: %s
-				""", aluno, personal, descricao, data);
+				""", aluno, personal.getNome(), descricao, data);
 	}
 
 }

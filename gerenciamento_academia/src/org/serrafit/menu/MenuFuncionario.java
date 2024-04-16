@@ -72,19 +72,15 @@ public class MenuFuncionario implements Menu {
 				break;
 			case 4:
 				emitirRelatorioPlanos(listaPlanos);
-				voltarMenu(sc);
 				break;
 			case 5:
 				emitirRelatorioAlunos(listaAlunos);
-				voltarMenu(sc);
 				break;
 			case 6:
 				emitirRelatorioEquipe(listaPersonal, listaFuncionario);
-				voltarMenu(sc);
 				break;
 			case 7:
 				emitirRelacaoAvaliacaoPorPeriodo(listaAvaliacao);
-				voltarMenu(sc);
 				break;
 			case 0:
 				System.out.println("Finalizando programa..");
@@ -98,13 +94,14 @@ public class MenuFuncionario implements Menu {
 	public void cadastrarPlano(Scanner sc, List <Plano> listaPlano) throws InterruptedException{
 	    System.out.println("\n=== CADASTRAR NOVO PLANO ===");
 	    
-	    String nomePlano = ValidacaoPlano.validaPlano(sc, listaPlanos);
+	    String nomePlano = ValidacaoPlano.validaNomePlano(sc, listaPlano);
 
 	    double valor = ValidacaoPlano.validaPreco(sc);
 
 	    String descricao = ValidacaoPlano.validaDescricao(sc);
 
-	    System.out.print("Duração em meses: ");
+	    System.out.println("Duração em meses: ");
+	    
 	    int duracao = sc.nextInt();
 	    
 	    Plano novoPlano = new Plano(nomePlano, valor, descricao, duracao);
@@ -121,7 +118,7 @@ public class MenuFuncionario implements Menu {
 	    System.out.println("\n=== CADASTRO DE NOVO ALUNO ===");
 	    
 	    String nome = ValidacaoPessoa.validaNome(sc);
-
+	    
 	    String cpf = ValidacaoPessoa.validaCpf(sc);
 	    
 	    LocalDate dataNascimento = ValidacaoPessoa.validaDataNascimento(sc);
@@ -140,8 +137,7 @@ public class MenuFuncionario implements Menu {
 	    
 	    listaPessoa.add((Aluno) novoAluno);
 
-	    System.out.println("\n-- CADASTRO - ALUNO - CONCLUÍDO --");
-	    System.out.println("Cadastro do aluno '" + nome + "' concluído com sucesso!");
+	    System.out.println("\n-- Novo aluno cadastrado com sucesso! --");
 	    System.out.println(novoAluno);
 	}
 
@@ -179,7 +175,7 @@ public class MenuFuncionario implements Menu {
 	
 	public void emitirRelatorioPlanos(List<Plano> listaPlano) {
 	    try {
-	        File arquivo = new File("C:\\Users\\listaEquipe.txt");
+	        File arquivo = new File("C:\\Users\\Public\\listaEquipe.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
 	        if (listaPlano.isEmpty()) {
 	            System.out.println("A lista de planos está vazia.");
@@ -255,29 +251,23 @@ public class MenuFuncionario implements Menu {
 	    }
 	}
 	
-	public void voltarMenu(Scanner sc) throws InterruptedException{
-	
+	public void voltarMenu(Scanner sc) throws InterruptedException {
         String voltar;
+        boolean opcaoValida = false;
+
         do {
             System.out.print("Voltar ao Menu? (S/n)");
-            voltar = sc.nextLine().trim(); // remove espaços em branco antes e depois da entrada
+            voltar = sc.next().trim().toUpperCase();
 
-            if (voltar.isEmpty()) { // verifica se a entrada está em branco
-                voltar = sc.nextLine().trim();
-            }
-        } while (voltar.isEmpty()); // continua solicitando entrada até que não esteja em branco
-
-        switch (voltar.toUpperCase()) {
-            case "S":
+            if (voltar.equals("S")) {
                 exibirMenu(sc);
-                break;
-            case "N":
-                
-            default:
-                System.out.println("Opção inválida. Por favor, escolha 'S' para sim ou 'N' para não.");
-                voltarMenu(sc); // chama novamente o método se a opção for inválida
-                break;
-        }
+                opcaoValida = true;
+            } else if (voltar.equals("N")) {
+                opcaoValida = true;
+            } else {
+                System.err.println("Opção inválida.\nPor favor, escolha 'S' para sim ou 'N' para não.");
+            }
+        } while (!opcaoValida);
     }
 
 }

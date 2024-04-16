@@ -50,10 +50,10 @@ public class Plano {
 	// Método
 	public String toString() {
 		return String.format("""
-				Tipo de Plano: %s
-				Valor: %.2f
+				%s
+				Valor: R$%.2f
 				Descrição: %s
-				Duração do Plano: %d
+				Duração do Plano: %d meses
 				""", nome, valor, descricao, duracao); 
 	}
 }

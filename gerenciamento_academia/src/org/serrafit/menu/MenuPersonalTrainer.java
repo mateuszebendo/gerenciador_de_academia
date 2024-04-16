@@ -45,20 +45,16 @@ public class MenuPersonalTrainer implements Menu{
 					""", personalTrainer.getNome());
 			System.out.println(mensagem);
 			opcao = sc.nextInt();
-			sc.nextLine();
 
 			switch (opcao) {
 			case 1:
 				registrarAvaliacao(sc, listaAlunos);
-				voltarMenu(sc);
 				break;
 			case 2:
 				visualizarAgenda(sc, listaAgendamentos);
-				voltarMenu(sc);
 				break;
 			case 3:
 				visualizarListaAvaliacoes(sc, listaAvaliacoes);
-				voltarMenu(sc);
 				break;
 			case 0:
 				sairMenu();
@@ -84,11 +80,9 @@ public class MenuPersonalTrainer implements Menu{
 		
 		String descricao = ValidacaoPlano.validaDescricao(sc);
 		
-		this.listaAvaliacoes.add(new Avaliacao(alunoAvaliacao, personalTrainer, descricao, dataInformada));
+		Registra.adicionaAvaliacaoUnica(new Avaliacao(alunoAvaliacao, personalTrainer, descricao, dataInformada));
 		
-		System.out.println("Aluno cadastrado com sucesso!");
-		
-		exibirMenu(sc);
+		System.out.println("Avaliação cadastrado com sucesso!");
 	}
 
 	public void visualizarAgenda(Scanner sc, List<Agendamento> agenda) throws InterruptedException {
@@ -110,17 +104,19 @@ public class MenuPersonalTrainer implements Menu{
 	}
 
 	public void visualizarListaAvaliacoes(Scanner sc, List<Avaliacao> avaliacoes) throws InterruptedException  {
+		boolean continuar = false;
 		var mensagem = String.format("""
 				==========================
 				      AVALIAÇÕES
 				==========================
 				""");
 		System.out.println(mensagem);	
-		for (Avaliacao avaliacao : avaliacoes) {
-			if (avaliacao != null) {
-				System.out.println(avaliacao);
-			} else {
-				System.out.println("Sem histórico de avaliações!");
+		for (int i = 0; i < avaliacoes.size(); i++) {
+			if (avaliacoes.get(i).getPersonal().getCref() == personalTrainer.getCref()) {
+				System.out.println("Aluno: " + avaliacoes.get(i).getAluno().getNome() + "\nPersonal: " + avaliacoes.get(i).getPersonal().getNome() + "\nDescrição: " + avaliacoes.get(i).getDescricao() + "\nData da avaliação: " + avaliacoes.get(i).getData() + "\n");
+				continuar = true;
+			} else if(continuar == false && i == avaliacoes.size() - 1){
+				System.out.println("Sem Avaliações registradas!\n");
 			}
 		}
 		

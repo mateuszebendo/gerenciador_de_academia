@@ -68,8 +68,7 @@ public abstract class Pessoa{
 				CPF: %s
 				D.Nascimento: %s
 				Contato: %s
-				Senha: %s
-				""", nome, cpf, dataNascimento, contato, senha);
+				""", nome, cpf, dataNascimento, contato);
 	}
 
 }
