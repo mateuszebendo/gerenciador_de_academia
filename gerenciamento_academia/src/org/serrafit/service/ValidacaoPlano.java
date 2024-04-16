@@ -61,10 +61,11 @@ public class ValidacaoPlano {
 	
 	public static String validaDescricao(Scanner sc) {
 		String descricao = null;
-		
+		do {
 			System.out.println("Digite uma descrição: \n(máx: 200 caracteres)");
 			descricao = sc.nextLine();
-		
-		return descricao;
+			if(descricao.length() <= 200) return descricao;
+			else System.out.println("Descrição muito longa - Máx: 200 caracteres");
+		}while(true);
 	}
 }

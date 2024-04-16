@@ -1,9 +1,12 @@
 package org.serrafit.service;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.serrafit.classes.Aluno;
 
 public class ValidacaoPersonal {
 	
@@ -70,4 +73,19 @@ public class ValidacaoPersonal {
         return finalAtendimento;
     }
 	
+	public static Aluno validaAlunoExistente(Scanner sc, List <Aluno> listaAlunos) throws InterruptedException {
+		while(true) {
+			System.out.println("CPF do Aluno -  ");
+			String cpf = ValidacaoPessoa.validaCpf(sc);
+			
+			Aluno alunoAvaliacao = null;
+			for(Aluno aluno: listaAlunos) {
+				if(cpf.equals(aluno.getCpf())){
+					alunoAvaliacao = aluno;
+					return alunoAvaliacao;
+				}
+			}
+			if(alunoAvaliacao == null) System.out.println("Digite o cpf de um Aluno existe!");
+		}
+	}	
 }

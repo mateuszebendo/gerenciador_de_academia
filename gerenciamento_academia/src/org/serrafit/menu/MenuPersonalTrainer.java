@@ -11,6 +11,7 @@ import org.serrafit.classes.Avaliacao;
 import org.serrafit.classes.PersonalTrainer;
 import org.serrafit.service.Registra;
 import org.serrafit.service.ValidacaoAvaliacao;
+import org.serrafit.service.ValidacaoPersonal;
 import org.serrafit.service.ValidacaoPessoa;
 import org.serrafit.service.ValidacaoPlano;
 
@@ -75,16 +76,9 @@ public class MenuPersonalTrainer implements Menu{
 				 REGISTRAR NOVA AVALIAÇÃO
 				==========================
 				""");
-		System.out.println(mensagem);	
-		System.out.println("CPF do Aluno -  ");
-		String cpf = ValidacaoPessoa.validaCpf(sc);
+		System.out.println(mensagem);
 		
-		Aluno alunoAvaliacao = null;
-		for(Aluno aluno: listaAlunos) {
-			if(cpf.equals(aluno.getCpf())){
-				alunoAvaliacao = aluno;
-			}
-		}
+		Aluno alunoAvaliacao = ValidacaoPersonal.validaAlunoExistente(sc, listaAlunos);
 		
 		LocalDate dataInformada = ValidacaoAvaliacao.validaData(sc);
 		
@@ -92,6 +86,9 @@ public class MenuPersonalTrainer implements Menu{
 		
 		this.listaAvaliacoes.add(new Avaliacao(alunoAvaliacao, personalTrainer, descricao, dataInformada));
 		
+		System.out.println("Aluno cadastrado com sucesso!");
+		
+		exibirMenu(sc);
 	}
 
 	public void visualizarAgenda(Scanner sc, List<Agendamento> agenda) throws InterruptedException {
