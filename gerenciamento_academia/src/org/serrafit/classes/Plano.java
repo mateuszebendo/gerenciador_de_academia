@@ -7,8 +7,11 @@ public class Plano {
 	private int duracao;
 
 	// Construtor
-	public Plano(String nome) {
+	public Plano(String nome, double valor, String descricao, int duracao) {
 		this.nome = nome;
+		this.valor = valor; 
+		this.descricao = descricao; 
+		this.duracao = duracao;
 	}
 
 	// Get & Set
