@@ -18,14 +18,15 @@ public class MenuAluno implements Menu {
 	Aluno aluno = null;	
 	
 	List<PersonalTrainer> personais = new ArrayList<PersonalTrainer>();
+	List<Agendamento> agendamentos = new ArrayList<Agendamento>();
 		
 	public MenuAluno(Aluno aluno) {
 		super();
 		this.aluno = aluno;
 		this.personais = Registra.criaPersonais();
+		this.agendamentos = Registra.criaAgendamento();
 	}
 	
-
 	@Override
 	public void exibirMenu(Scanner sc) {
 		int opcao = -1;
@@ -51,9 +52,10 @@ public class MenuAluno implements Menu {
 			case 1:
 				exibeDadosPessoais();
 				exibePlanoContratado();
+				voltarMenu(sc);
 				break;
 			case 2:
-				solicitaAgendamento(sc, personais);
+				solicitaAgendamento(sc, personais, agendamentos);
 				break;
 			case 3:
 				//visualizarAgendamentos();
@@ -77,7 +79,7 @@ public class MenuAluno implements Menu {
 	public void exibeDadosPessoais() {		
 		var mensagem = String.format("""
 				=============================
-					DADOS PESSOAIS
+					   DADOS PESSOAIS
 				=============================
 				Nome: %s
 				CPF: %s
@@ -92,21 +94,16 @@ public class MenuAluno implements Menu {
 	public void exibePlanoContratado() {
 		var mensagem = String.format("""
 				--------------------------
-				PLANO CONTRATADO
+				     PLANO CONTRATADO
 				--------------------------
 				Plano: %s
 				""", aluno.getPlano());
 		System.out.println(mensagem);		
 	}
 
-	public void solicitaAgendamento(Scanner sc, List<PersonalTrainer> lista) {
-		PersonalTrainer personal = null;
-		boolean continuar = true;
+	public void solicitaAgendamento(Scanner sc, List<PersonalTrainer> listaPersonal, List<Agendamento> listaAgendamento) {
 		LocalTime horario = null;
-		List<Agendamento> agendamentos = new ArrayList<Agendamento>();
-		PersonalTrainer personalSelecionado = null;
 		LocalDate data = null;
-		boolean podeRegistrar = false;
 		
 		var mensagem = String.format("""
 				==========================
@@ -115,68 +112,35 @@ public class MenuAluno implements Menu {
 				""");
 		System.out.println(mensagem);	
 		
-		do {
+		// o solicitaAgendamento tem que captar horario e data e ver quais personais atendem naquele horario escolhido e checar se o personal ja tem um agendamento para aquela hora e data
 			System.out.println("Informe o horário desejado (formato HH:mm): ");
 			String horarioInformado = sc.nextLine();
 			horario = LocalTime.parse(horarioInformado);
 			
-			agendamentos = Registra.criaAgendamento();
-			for (int i = 0; i < lista.size(); i++) {
-				if(lista.get(i) instanceof PersonalTrainer) {
-					if(lista.get(i).getInicioAtendimento().isBefore(horario) && lista.get(i).getFimAtendimento().isAfter(horario)) {
-						System.out.println("Personal que atendem no horário: ");
-						System.out.println(lista.get(i) + "\n");
-						continuar = false;
-					} else if(continuar == true && i == lista.size() - 1){
-						System.out.println("Não há personais disponíveis no horário desejado.\n");
-						return;
-					}
-				} 
-			}
-		}while(continuar == true);
-		
-		continuar = true;
-		
-		do {
-			System.out.println("Selecione o personal pelo CREF:");
-			String crefPersonal = sc.next();
-			
-			personalSelecionado = encontrarPersonalPeloNome(crefPersonal, personais);
-			if(personalSelecionado != null) {
-				continuar = false;
-			} else {
-				System.out.println("CREF inválido!");
-				voltarMenu(sc);
-			}
-		}while(continuar == true);
-
-		continuar = true;
-		
-		do {
 			System.out.println("Insira a data (Formato AAAA-MM-DD): ");
 			String dataInformada = sc.next();
 			data = LocalDate.parse(dataInformada);
 			
-			agendamentos = Registra.criaAgendamento();
-			for (int i = 0; i < agendamentos.size(); i++) {
-				if(agendamentos.get(i).getData() == data && agendamentos.get(i).getHorario() == horario && i == agendamentos.size() - 1) {
-					System.out.println("Não há horarios disponíveis.");
-				} else {
-					podeRegistrar = true;
-					continuar = false;
+			for(int i = 0; i < listaPersonal.size(); i++) {
+				if(listaPersonal.get(i).getInicioAtendimento().isBefore(horario) && listaPersonal.get(i).getFimAtendimento().isAfter(horario)) {
+					System.out.println(listaPersonal.get(i));
 				}
 			}
-		}while(continuar == true);
-		
-		if(podeRegistrar) {
-			Agendamento agendamento = new Agendamento(horario, aluno, personalSelecionado, data);
-			Registra.adicionaAgendamentoUnico(agendamento);
 			
-			System.out.println("\n" + agendamento + "\nAgendado com sucesso!");
-		}
-	}
+			System.out.println("Informe o Personal desejado pelo CREF: ");
+			String crefSelecionado = sc.next();
+			
+			PersonalTrainer personalSelecionado = encontrarPersonalPeloCref(crefSelecionado, listaPersonal);
+			
+			Agendamento agendamento = new Agendamento(horario, this.aluno, personalSelecionado, data);
+			Registra.adicionaAgendamentoUnico(agendamento);
+			System.out.println("Agendamento concluido!");
+			
+			
+			
+	    }
 	
-	private PersonalTrainer encontrarPersonalPeloNome(String cref, List<PersonalTrainer> personais) {
+	private PersonalTrainer encontrarPersonalPeloCref(String cref, List<PersonalTrainer> personais) {
 		for (PersonalTrainer personal : personais) {
 			if (personal instanceof PersonalTrainer && personal.getCref().equals(cref)) {
 				return personal;
@@ -199,7 +163,6 @@ public class MenuAluno implements Menu {
 				System.out.println("Sem agendamentos registrados!");
 			}
 		}
-
 	}
 
 	public void cancelarAgendamento() {
@@ -209,7 +172,6 @@ public class MenuAluno implements Menu {
 				==========================
 				""");
 		System.out.println(mensagem);	
-
 	}
 
 	public void visualizarAvaliacoes(List<Avaliacao> avaliacoes) {
@@ -235,24 +197,24 @@ public class MenuAluno implements Menu {
 
 	public void voltarMenu(Scanner sc) {
 		String voltar;
+		boolean voltarAoMenu = false; 
+		
 		do {
 			System.out.print("Deseja voltar ao Menu: S - sim | N - não");
 			voltar = sc.nextLine().trim(); // remove espaços em branco antes e depois da entrada
 
-			if (voltar.isEmpty()) { // verifica se a entrada está em branco
-				voltar = sc.nextLine().trim();
-			}
-		} while (voltar.isEmpty()); // continua solicitando entrada até que não esteja em branco
-
 		switch (voltar.toUpperCase()) {
 		case "S":
 			this.exibirMenu(sc);
+			voltarAoMenu = true;
 			break;
 		case "N":
+			sairMenu();
 			break;
 		default:
 			System.out.println("Opção inválida. Por favor, escolha 'S' para sim ou 'N' para não.");
-			this.voltarMenu(sc);
 		}
+		
+		} while (!voltar.equalsIgnoreCase("S") && !voltar.equalsIgnoreCase("N")); // enqnt voltar for diferente de s ou n ele repete a funçao
 	}
 }
