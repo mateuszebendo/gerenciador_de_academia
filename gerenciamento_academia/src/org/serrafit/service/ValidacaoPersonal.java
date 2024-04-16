@@ -74,18 +74,20 @@ public class ValidacaoPersonal {
     }
 	
 	public static Aluno validaAlunoExistente(Scanner sc, List <Aluno> listaAlunos) throws InterruptedException {
-		while(true) {
-			System.out.println("CPF do Aluno -  ");
-			String cpf = ValidacaoPessoa.validaCpf(sc);
-			
-			Aluno alunoAvaliacao = null;
-			for(Aluno aluno: listaAlunos) {
-				if(cpf.equals(aluno.getCpf())){
-					alunoAvaliacao = aluno;
-					return alunoAvaliacao;
-				}
-			}
-			if(alunoAvaliacao == null) System.out.println("Digite o cpf de um Aluno existe!");
-		}
-	}	
+		String cpf = ValidacaoPessoa.validaCpf(sc);
+		while (true) {
+            System.out.println("CPF do Aluno: ");
+
+            Aluno alunoAvaliacao = null;
+            for (Aluno aluno : listaAlunos) {
+                if (cpf.equals(aluno.getCpf())) {
+                    alunoAvaliacao = aluno;
+                    System.out.println("Aluno encontrado!");
+                    return alunoAvaliacao;
+                }
+            }
+            System.out.println("O CPF digitado não corresponde a nenhum aluno existente. Tente novamente.");
+            Thread.sleep(1000);
+        }
+    }	
 }

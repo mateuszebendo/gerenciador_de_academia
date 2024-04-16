@@ -30,21 +30,22 @@ public class ValidacaoPessoa {
 	
 	public static String validaCpf(Scanner sc) throws InterruptedException {
     	String cpf = "";
-    	String cpfNumerico = "";
+    	String cpfFinal = "";
     	boolean cpfCorreto = false;
     	while(!cpfCorreto) {
 	        System.out.print("Digite o CPF: ");
 	        cpf = sc.nextLine();
-	        cpfNumerico = cpf.replaceAll("[^0-9]", "");
+	        cpfFinal = cpf.replaceAll("[^0-9]", "");
 
-	        if (cpfNumerico.length() != 11) {
+	        if (cpfFinal.length() != 11) {
 	        	System.out.println("CPF INVALIDO! Digite novamente!");
 	        	Thread.sleep(1000);
 	        }else {
 	        	break;
 	        }
     	}
-    	return cpfNumerico;
+    	cpfFinal = cpfFinal.substring(0, 3) + "." + cpfFinal.substring(3, 6) + "." + cpfFinal.substring(6, 9) + "-" + cpfFinal.substring(9);
+    	return cpfFinal;
 	}
 	
 	public static LocalDate validaDataNascimento(Scanner sc) throws InterruptedException{
