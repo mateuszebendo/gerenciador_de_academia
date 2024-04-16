@@ -1,4 +1,4 @@
-package org.serrafit.DAO;
+package org.serrafit.conexao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

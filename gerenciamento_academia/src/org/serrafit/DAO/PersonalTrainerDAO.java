@@ -8,6 +8,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 
 import org.serrafit.classes.PersonalTrainer;
+import org.serrafit.conexao.ConexaoDB;
 
 public class PersonalTrainerDAO {
 	static PreparedStatement script = null; 

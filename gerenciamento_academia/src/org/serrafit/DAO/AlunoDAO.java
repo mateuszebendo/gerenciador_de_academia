@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.serrafit.classes.Aluno;
+import org.serrafit.conexao.ConexaoDB;
 
 public class AlunoDAO{
 	static PreparedStatement script = null;

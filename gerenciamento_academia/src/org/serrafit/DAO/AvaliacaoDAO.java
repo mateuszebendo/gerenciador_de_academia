@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.serrafit.classes.Avaliacao;
+import org.serrafit.conexao.ConexaoDB;
 
 public class AvaliacaoDAO {
 	static PreparedStatement script = null;

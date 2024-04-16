@@ -1,16 +1,13 @@
 package org.serrafit.classes;
 
-import java.time.LocalDate;
-
 public class Plano {
 	private String nome;
 	private double valor;
 	private String descricao;
-	private LocalDate duracao;
+	private int duracao;
 
 	// Construtor
 	public Plano(String nome) {
-		super();
 		this.nome = nome;
 	}
 
@@ -39,11 +36,11 @@ public class Plano {
 		this.descricao = descricao;
 	}
 
-	public LocalDate getDuracao() {
+	public int getDuracao() {
 		return duracao;
 	}
 
-	public void setDuracao(LocalDate duracao) {
+	public void setDuracao(int duracao) {
 		this.duracao = duracao;
 	}
 
@@ -53,7 +50,7 @@ public class Plano {
 				Tipo de Plano: %s
 				Valor: %.2f
 				Descrição: %s
-				Duração do Plano: %s
+				Duração do Plano: %d
 				""", nome, valor, descricao, duracao); 
 	}
 }

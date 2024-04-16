@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 
 import org.serrafit.classes.Funcionario;
+import org.serrafit.conexao.ConexaoDB;
 
 public class FuncionarioDAO {
 	PreparedStatement script = null; 

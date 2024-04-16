@@ -2,18 +2,20 @@ package org.serrafit.classes;
 
 import java.time.LocalDate;
 
-public abstract class Pessoa implements Menu{
+import org.serrafit.menu.Menu;
+
+public abstract class Pessoa{
 	private String nome;
 	private String cpf;
-	private LocalDate dNasc;
+	private LocalDate dataNascimento;
 	private String contato;
 	private String senha;
 
 	// Construtor
-	public Pessoa(String nome, String cpf, LocalDate dNasc, String contato, String senha) {
+	public Pessoa(String nome, String cpf, LocalDate dataNascimento, String contato, String senha) {
 		this.nome = nome;
 		this.cpf = cpf;
-		this.dNasc = dNasc;
+		this.dataNascimento = dataNascimento;
 		this.contato = contato;
 		this.senha = senha;
 	}
@@ -35,12 +37,12 @@ public abstract class Pessoa implements Menu{
 		this.cpf = cpf;
 	}
 
-	public LocalDate getdNasc() {
-		return dNasc;
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
 	}
 
-	public void setdNasc(LocalDate dNasc) {
-		this.dNasc = dNasc;
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public String getContato() {
@@ -67,7 +69,7 @@ public abstract class Pessoa implements Menu{
 				D.Nascimento: %s
 				Contato: %s
 				Senha: %s
-				""", nome, cpf, dNasc, contato, senha);
+				""", nome, cpf, dataNascimento, contato, senha);
 	}
 
 }

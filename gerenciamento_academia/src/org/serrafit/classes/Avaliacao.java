@@ -9,8 +9,7 @@ public class Avaliacao {
 	private LocalDate data;
 
 	// Construtor
-	public Avaliacao(Aluno aluno, PersonalTrainer personal, String descricao, LocalDate data) {
-		super();
+	public Avaliacao(Aluno aluno, PersonalTrainer personal, String descricao, LocalDate data) {		
 		this.aluno = aluno;
 		this.personal = personal;
 		this.descricao = descricao;

@@ -8,6 +8,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 
 import org.serrafit.classes.Agendamento;
+import org.serrafit.conexao.ConexaoDB;
 
 public class AgendamentoDAO {
 	static PreparedStatement script = null;

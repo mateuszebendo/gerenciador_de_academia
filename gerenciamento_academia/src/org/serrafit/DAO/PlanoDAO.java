@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.serrafit.conexao.ConexaoDB;
+
 public class PlanoDAO {
 	static PreparedStatement script = null;
 	
