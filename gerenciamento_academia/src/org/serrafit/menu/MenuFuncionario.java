@@ -16,6 +16,9 @@ import org.serrafit.classes.PersonalTrainer;
 import org.serrafit.classes.Pessoa;
 import org.serrafit.classes.Plano;
 import org.serrafit.service.Registra;
+import org.serrafit.service.ValidacaoPersonal;
+import org.serrafit.service.ValidacaoPessoa;
+import org.serrafit.service.ValidacaoPlano;
 
 public class MenuFuncionario implements Menu {
 	Funcionario funcionario = null;
@@ -29,7 +32,7 @@ public class MenuFuncionario implements Menu {
 	public MenuFuncionario(Funcionario funcionario) {
 		super();
 		this.funcionario = funcionario;
-		this.listaPlanos = Registra.criarPlano();
+		this.listaPlanos = Registra.criaPlano();
 		this.listaAlunos = Registra.criaAlunos();
 		this.listaPersonal = Registra.criaPersonais();
 		this.listaFuncionario = Registra.criaFuncionario();
@@ -37,7 +40,7 @@ public class MenuFuncionario implements Menu {
 	}
 	
 	@Override
-	public void exibirMenu(Scanner sc) {
+	public void exibirMenu(Scanner sc) throws InterruptedException{
 		var mensagem = String.format("""
 				============================================
 				         BEM VINDO - %S
@@ -92,16 +95,13 @@ public class MenuFuncionario implements Menu {
 	  }
 	}
 
-	public void cadastrarPlano(Scanner sc, List <Plano> listaPlano) {
+	public void cadastrarPlano(Scanner sc, List <Plano> listaPlano) throws InterruptedException{
 	    System.out.println("\n=== CADASTRAR NOVO PLANO ===");
-	    System.out.print("Nome do Plano: ");
-	    String nome = sc.next();
+	    String nomePlano = ValidacaoPlano.validaPlano(sc, listaPlanos);
 
-	    System.out.print("Valor: R$");
-	    double valor = sc.nextDouble();
+	    double valor = ValidacaoPlano.validaPreco(sc);
 
-	    System.out.print("Descrição: ");
-	    String descricao = sc.next();
+	    String descricao = ValidacaoPlano.validaDescricao(sc);
 
 	    System.out.print("Duração em meses: ");
 	    int duracao = sc.nextInt();
@@ -109,46 +109,34 @@ public class MenuFuncionario implements Menu {
 	    
 //	    System.out.println("Se a data matrícula for " + dataMatricula + " o encerramento do plano é na data:" + fimDoPlano);	
 	    
-	    Plano novoPlano = new Plano(nome, valor, descricao, duracao);
+	    Plano novoPlano = new Plano(nomePlano, valor, descricao, duracao);
 	    
 	    listaPlano.add(novoPlano);
 
 	    System.out.println("\n-- CADASTRO - PLANO - CONCLUÍDO --");
-	    System.out.println("Cadastro do plano '" + nome + "' concluído com sucesso!");
+	    System.out.println("Cadastro do plano '" + nomePlano + "' concluído com sucesso!");
 	    System.out.println(novoPlano);
 	    sc.nextLine();
 	}
 
-	public void cadastrarAluno(Scanner sc, List <Aluno> listaPessoa, List <Plano> listaPlanos) {
+	public void cadastrarAluno(Scanner sc, List <Aluno> listaPessoa, List <Plano> listaPlanos) throws InterruptedException {
 	    System.out.println("\n=== CADASTRO DE NOVO ALUNO ===");
-	    System.out.print("Nome: ");
-	    String nome = sc.next();
-
-	    System.out.print("CPF: ");
-	    String cpf = sc.next();
-
-	    System.out.print("Data de Nascimento (AAAA-MM-DD): ");
-	    LocalDate dataNascimento = LocalDate.parse(sc.next());
-
-	    System.out.print("Contato: ");
-	    String contato = sc.next();
-
-	    System.out.print("Senha: ");
-	    String senha = sc.next();
-
-	    System.out.print("Data de Matrícula (AAAA-MM-DD): ");
-	    LocalDate dataMatricula = LocalDate.parse(sc.next());
-
-	    System.out.print("Planos Disponiveis: ");
-	    System.out.println(listaPlanos);
-	    String nomePlano = sc.next();
 	    
-	    int planoEscolhido = 0;
-	    for(int i = 0; i < listaPlanos.size(); i++) {
-	    	if(nomePlano.equalsIgnoreCase(listaPlanos.get(i).getNome())){
-	    		planoEscolhido = i; 
-	    	}
-	    }
+	    String nome = ValidacaoPessoa.validaNome(sc);
+
+	    String cpf = ValidacaoPessoa.validaCpf(sc);
+	    
+	    LocalDate dataNascimento = ValidacaoPessoa.validaDataNascimento(sc);
+
+	    String contato = ValidacaoPessoa.validaContato(sc);
+
+	    String senha = ValidacaoPessoa.validaSenha(sc);
+
+	    LocalDate dataMatricula = LocalDate.now();
+
+	    String nomePlano = ValidacaoPlano.validaPlano(sc, listaPlanos);
+	    
+	    int planoEscolhido = ValidacaoPlano.posicaoPlano(listaPlanos, nomePlano);
 
 	    Pessoa novoAluno = new Aluno(nome, cpf, dataNascimento, contato, senha, dataMatricula, listaPlanos.get(planoEscolhido));
 	    
@@ -159,32 +147,26 @@ public class MenuFuncionario implements Menu {
 	    System.out.println(novoAluno);
 	}
 
-	public void cadastrarPersonalTrainer(Scanner sc, List <PersonalTrainer> listaPersonal) {
+	public void cadastrarPersonalTrainer(Scanner sc, List <PersonalTrainer> listaPersonal) throws InterruptedException {
 	    System.out.println("\n=== CADASTRO DE NOVO PERSONAL TRAINER ===");
-	    System.out.print("Nome: ");
-	    String nome = sc.next();
-
-	    System.out.print("CPF: ");
-	    String cpf = sc.next();
-
-	    System.out.print("Data de Nascimento (AAAA-MM-DD): ");
-	    LocalDate dataNascimento = LocalDate.parse(sc.next());
-
-	    System.out.print("Contato: ");
-	    String contato = sc.next();
-
-	    System.out.print("Senha: ");
-	    String senha = sc.next();
-
-	    System.out.print("Ínicio do Horário de Atendimento (HH:MM): ");
-	    LocalTime inicioAtendimento = LocalTime.parse(sc.next());
 	    
-	    System.out.print("Final do Horário de Atendimento (HH:MM): ");
-	    LocalTime finalAtendimento = LocalTime.parse(sc.next());
+	    String nome = ValidacaoPessoa.validaNome(sc);
 
-	    System.out.print("CREF: ");
-	    String cref = sc.next();
+	    String cpf = ValidacaoPessoa.validaCpf(sc);
+	    
+	    LocalDate dataNascimento = ValidacaoPessoa.validaDataNascimento(sc);
 
+	    String contato = ValidacaoPessoa.validaContato(sc);
+
+	    String senha = ValidacaoPessoa.validaSenha(sc);
+
+	    LocalTime inicioAtendimento = ValidacaoPersonal.validaInicioAtendimento(sc);
+	    
+	    LocalTime finalAtendimento = ValidacaoPersonal.validaFinalAtendimento(inicioAtendimento, sc);
+
+	    String cref = ValidacaoPersonal.validaCref(sc);
+
+	    //colocar especialidade como enum
 	    System.out.print("Especialidade: ");
 	    String especialidade = sc.next();
 
@@ -281,7 +263,7 @@ public class MenuFuncionario implements Menu {
 		    }
 	}
 	
-	public void voltarMenu(Scanner sc) {
+	public void voltarMenu(Scanner sc) throws InterruptedException{
 	
         String voltar;
         do {

@@ -14,11 +14,10 @@ import org.serrafit.menu.MenuAluno;
 import org.serrafit.menu.MenuFuncionario;
 import org.serrafit.menu.MenuPersonalTrainer;
 
-public class Validacao {
+public class ValidacaoLogin {
 	public static Menu login(Scanner sc, List<Pessoa> cadastros) {
 		boolean loginConcluido = false;
 		//int usuarioLogando = 0;
-		ValidacaoDAO validacaoBD = new ValidacaoDAO();
 		String tipoUsuario = null;		
 		
 		//Looping de inserção de CPF
