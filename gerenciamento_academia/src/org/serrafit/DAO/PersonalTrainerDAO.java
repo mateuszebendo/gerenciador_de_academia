@@ -25,7 +25,7 @@ public class PersonalTrainerDAO {
 				script.setString(2, personal.getCpf());
 				script.setString(3, personal.getSenha());
 				script.setString(4, personal.getContato());
-				script.setDate(5, Date.valueOf(personal.getdNasc()));
+				script.setDate(5, Date.valueOf(personal.getDataNascimento()));
 				
 				resultado = script.executeQuery();
 				

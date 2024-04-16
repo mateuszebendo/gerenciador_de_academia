@@ -10,16 +10,17 @@ public class ValidacaoPessoa {
 	
 	public static String validaNome(Scanner sc) throws InterruptedException {
 		String nome;
+		Pattern padrao = Pattern.compile("^[a-zA-ZÀ-ÿ]+(\\s+[a-zA-ZÀ-ÿ]+)*$");
+        Matcher comparador = null;
         while (true) {
             System.out.println("Digite o nome: ");
             nome = sc.nextLine();
 
-            Pattern pattern = Pattern.compile("^[a-zA-ZÀ-ÿ]+(\\s+[a-zA-ZÀ-ÿ]+)*$");
-            Matcher matcher = pattern.matcher(nome);
+            comparador = padrao.matcher(nome);
 
-            if (matcher.matches()) {
+            if (comparador.matches()) {
                 break;
-            } else if (!(matcher.matches())) {
+            } else if (!(comparador.matches())) {
                 System.out.println("Nome inválido. Use apenas letras e espaços.");
                 Thread.sleep(1000);
             }

@@ -31,7 +31,7 @@ public class AvaliacaoDAO {
 				
 				script.setInt(1, idAluno);
 				script.setInt(2, idPersonal);
-				script.setString(3, avaliacao.getStatus());
+				script.setString(3, avaliacao.getDescricao());
 				script.setDate(4, Date.valueOf(avaliacao.getData()));
 				
 				script.executeUpdate();

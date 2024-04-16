@@ -25,7 +25,7 @@ public class FuncionarioDAO {
 			script.setString(2, funcionario.getCpf());
 			script.setString(3, funcionario.getSenha());
 			script.setString(4, funcionario.getContato());
-			script.setDate(5, Date.valueOf(funcionario.getdNasc()));
+			script.setDate(5, Date.valueOf(funcionario.getDataNascimento()));
 			
 			rs = script.executeQuery();
 			

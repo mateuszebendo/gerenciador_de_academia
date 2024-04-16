@@ -22,7 +22,7 @@ public class AlunoDAO{
 			script.setString(2, aluno.getCpf());
 			script.setString(3, aluno.getSenha());
 			script.setString(4, aluno.getContato());
-			script.setDate(5, Date.valueOf(aluno.getdNasc()));
+			script.setDate(5, Date.valueOf(aluno.getDataNascimento()));
 			
 			resultado = script.executeQuery();
 			

@@ -28,7 +28,7 @@ public class SistemaAcademia {
 		Funcionario funcionario1 = new Funcionario("Matheus Zezé","2",LocalDate.of(2005, 7, 2),"22999991111","2","Arquiteto de banco de dados Sênior");
 		Agendamento agendamento1 = new Agendamento(LocalTime.of(14, 0), aluno1, personal1, LocalDate.of(2005, 5, 7));
 //		Agendamento agendamento2 = new Agendamento(LocalTime.of(14, 0), aluno1, personal1, LocalDate.of(2005, 5, 8));
-//		Agendamento agendamento3 = new Agendamento(LocalTime.of(14, 0), aluno1, personal1, LocalDate.of(2005, 5, 9));
+//		Agendamento agendamen1to3 = new Agendamento(LocalTime.of(14, 0), aluno1, personal1, LocalDate.of(2005, 5, 9));
 //		
 		cadastros.add(personal1);
 		cadastros.add(aluno1);

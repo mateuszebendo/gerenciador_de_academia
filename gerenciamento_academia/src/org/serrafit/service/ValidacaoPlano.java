@@ -2,6 +2,7 @@ package org.serrafit.service;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.serrafit.classes.Plano;
@@ -35,35 +36,34 @@ public class ValidacaoPlano {
 		    		planoEscolhido = i; 
 		    	}
 		    }
-		    if(planoEscolhido == 0) {
-		    	return -1;
-		    }
 		    return planoEscolhido;
 	}
 	
-	public static int validaPreco (Scanner sc) {
-		boolean numeroCorreto = false; 
-		int valor = 0;
-		while(!numeroCorreto) {
-			System.out.println("Valor do plano:");
-			System.out.println("$");
-			valor = sc.nextInt();
-			if(valor >= 0) {
-				System.out.println("Digite um valor maior que zero!");
-			} else {
-				numeroCorreto = true;
+	public static double validaPreco (Scanner sc) {
+		String valorString = "";
+		double valorNum = 0;
+		Pattern padrao = Pattern.compile("^[0-9.]+$");
+		Matcher comparador = null;
+		while(true) {
+			System.out.println("Insira o valor do plano: ");
+			System.out.print("$");
+			valorString = sc.nextLine();
+			
+			comparador = padrao.matcher(valorString);
+			
+			if(comparador.matches()) {
+				valorNum = Double.parseDouble(valorString);
+				return valorNum;
 			}
+			System.out.println("Valor de plano inválido!");
 		}
-		return valor;
 	}
 	
 	public static String validaDescricao(Scanner sc) {
-		String regex = "^.{0,200}$";
 		String descricao = null;
-		do {
-			System.out.println("Digite uma descrição para o plano: \n(máx: 200 caracteres)");
+		
+			System.out.println("Digite uma descrição: \n(máx: 200 caracteres)");
 			descricao = sc.nextLine();
-		}while(Pattern.matches(regex, descricao));
 		
 		return descricao;
 	}
