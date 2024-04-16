@@ -97,6 +97,7 @@ public class MenuFuncionario implements Menu {
 
 	public void cadastrarPlano(Scanner sc, List <Plano> listaPlano) throws InterruptedException{
 	    System.out.println("\n=== CADASTRAR NOVO PLANO ===");
+	    
 	    String nomePlano = ValidacaoPlano.validaPlano(sc, listaPlanos);
 
 	    double valor = ValidacaoPlano.validaPreco(sc);
@@ -105,9 +106,6 @@ public class MenuFuncionario implements Menu {
 
 	    System.out.print("Duração em meses: ");
 	    int duracao = sc.nextInt();
-//	    LocalDate fimDoPlano = dataMatricula.plusMonths(duracao);acrescentar if
-	    
-//	    System.out.println("Se a data matrícula for " + dataMatricula + " o encerramento do plano é na data:" + fimDoPlano);	
 	    
 	    Plano novoPlano = new Plano(nomePlano, valor, descricao, duracao);
 	    
@@ -181,7 +179,7 @@ public class MenuFuncionario implements Menu {
 	
 	public void emitirRelatorioPlanos(List<Plano> listaPlano) {
 	    try {
-	        File arquivo = new File("C:\\Users\\parru\\Documents\\listaPlanos.txt");
+	        File arquivo = new File("C:\\Users\\listaEquipe.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
 	        if (listaPlano.isEmpty()) {
 	            System.out.println("A lista de planos está vazia.");
@@ -200,7 +198,7 @@ public class MenuFuncionario implements Menu {
 
 	public void emitirRelatorioAlunos(List<Aluno> listaAlunos) {
 		try {
-	        File arquivo = new File("C:\\Users\\parru\\Documents\\listaAlunos.txt");
+	        File arquivo = new File("C:\\Users\\Public\\Documents\\listaAlunos.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
 	        if (listaAlunos.isEmpty()) {
 	            System.out.println("A lista de alunos está vazia.");
@@ -219,7 +217,7 @@ public class MenuFuncionario implements Menu {
 	
 	public void emitirRelatorioEquipe(List<PersonalTrainer> listaPersonal, List<Funcionario> listaFuncionario) {
 		try {
-	        File arquivo = new File("C:\\Users\\parru\\Documents\\listaEquipe.txt");
+	        File arquivo = new File("C:\\Users\\Public\\Documents\\listaEquipe.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
 	        if (listaAlunos.isEmpty()) {
 	            System.out.println("A lista de funcionários está vazia.");
@@ -230,7 +228,8 @@ public class MenuFuncionario implements Menu {
 	            for (Funcionario funcionario: listaFuncionario) {
 	            	escritor.write(funcionario + "\n");
 	            }
-	            System.out.println("Relatório de funcionários emitido com sucesso.");
+	            System.out.println("Relatório de "
+	            		+ "funcionários emitido com sucesso.");
 	        }
 	        
 	        escritor.close();
@@ -240,27 +239,20 @@ public class MenuFuncionario implements Menu {
 	}
 	
 	public void emitirRelacaoAvaliacaoPorPeriodo(List<Avaliacao> listaAvaliacoes) {
-		boolean continua = true; 
-		int i = 0;
 		try {
-		File arquivo = new File("C:\\Users\\parru\\Documents\\listaAvaliacao.txt");
-        FileWriter escritor = new FileWriter(arquivo);
-		while(continua) {
-			for(Avaliacao avaliacao: listaAvaliacoes) {
-				LocalDate data = listaAvaliacoes.get(i).getData();
-		        if (data.getMonthValue() == i && listaAvaliacoes.get(i) != null) {
-		        	escritor.write(avaliacao + "\n");
-		        } else if(listaAvaliacoes.isEmpty()){
-		        	System.out.println("A lista de avaliações esta vazia.");
-		        } else if( i == 13) continua = false;
-		        
-		          } i++;
-		       } 
-				System.out.println("Relatório de Avaliações emitido com sucesso.");
-				escritor.close();
-		    }catch (IOException e) {
-		        e.printStackTrace();
-		    }
+			File arquivo = new File("C:\\Users\\Public\\Documents\\listaAvaliacao.txt");
+	        FileWriter escritor = new FileWriter(arquivo);
+	        for (int mes = 1; mes <= 12; mes++) {
+                for (Avaliacao avaliacao : listaAvaliacoes) {
+                    if (avaliacao.getData().getMonthValue() == mes) {
+                        escritor.write(avaliacao + "\n");
+                    }
+                }
+            }
+			escritor.close();
+		} catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	public void voltarMenu(Scanner sc) throws InterruptedException{
