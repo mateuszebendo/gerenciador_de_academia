@@ -3,7 +3,6 @@ package org.serrafit.menu;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,7 +10,9 @@ import org.serrafit.classes.Agendamento;
 import org.serrafit.classes.Aluno;
 import org.serrafit.classes.Avaliacao;
 import org.serrafit.classes.PersonalTrainer;
-import org.serrafit.classes.Pessoa;
+import org.serrafit.registro.RegistroAgendamento;
+import org.serrafit.registro.RegistroAvaliacao;
+import org.serrafit.registro.RegistroPersonal;
 import org.serrafit.service.Registra;
 import org.serrafit.service.ValidacaoAluno;
 
@@ -25,9 +26,9 @@ public class MenuAluno implements Menu {
 	public MenuAluno(Aluno aluno) {
 		super();
 		this.aluno = aluno;
-		this.personais = Registra.criaPersonais();
-		this.agendamentos = Registra.criaAgendamento();
-		this.avaliacoes = Registra.criaAvaliacao();
+		this.personais = RegistroPersonal.criarListaPersonal();
+		this.agendamentos = RegistroAgendamento.criarListaAgendamentos();
+		this.avaliacoes = RegistroAvaliacao.criarListaAvaliacoes();
 	}
 	
 	@Override

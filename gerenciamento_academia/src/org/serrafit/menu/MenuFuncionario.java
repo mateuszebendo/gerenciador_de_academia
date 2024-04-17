@@ -15,6 +15,11 @@ import org.serrafit.classes.Funcionario;
 import org.serrafit.classes.PersonalTrainer;
 import org.serrafit.classes.Pessoa;
 import org.serrafit.classes.Plano;
+import org.serrafit.registro.RegistroAgendamento;
+import org.serrafit.registro.RegistroAluno;
+import org.serrafit.registro.RegistroAvaliacao;
+import org.serrafit.registro.RegistroPersonal;
+import org.serrafit.registro.RegistroPlano;
 import org.serrafit.service.Registra;
 import org.serrafit.service.ValidacaoPersonal;
 import org.serrafit.service.ValidacaoPessoa;
@@ -29,14 +34,13 @@ public class MenuFuncionario implements Menu {
 	List <Funcionario> listaFuncionario = new ArrayList<>();
 	List <Avaliacao> listaAvaliacao = new ArrayList<>();
 	
-	public MenuFuncionario(Funcionario funcionario) {
+	public MenuFuncionario(Funcionario funcionario) throws IOException {
 		super();
 		this.funcionario = funcionario;
-		this.listaPlanos = Registra.criaPlano();
-		this.listaAlunos = Registra.criaAlunos();
-		this.listaPersonal = Registra.criaPersonais();
-		this.listaFuncionario = Registra.criaFuncionario();
-		this.listaAvaliacao = Registra.criaAvaliacao();
+		this.listaPlanos = RegistroPlano.criarListaPlanos();
+		this.listaAlunos = RegistroAluno.criarListaAlunos();
+		this.listaPersonal = RegistroPersonal.criarListaPersonal();
+		this.listaAvaliacao = RegistroAvaliacao.criarListaAvaliacoes();
 	}
 	
 	@Override

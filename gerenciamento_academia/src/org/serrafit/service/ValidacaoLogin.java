@@ -1,9 +1,8 @@
 package org.serrafit.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-
-import org.serrafit.DAO.ValidacaoDAO;
 import org.serrafit.classes.Aluno;
 import org.serrafit.classes.Funcionario;
 import org.serrafit.classes.PersonalTrainer;
@@ -14,7 +13,7 @@ import org.serrafit.menu.MenuFuncionario;
 import org.serrafit.menu.MenuPersonalTrainer;
 
 public class ValidacaoLogin {
-	public static Menu login(Scanner sc, List<Pessoa> cadastros) {
+	public static Menu login(Scanner sc, List<Pessoa> cadastros) throws IOException {
 		boolean loginConcluido = false;
 		String tipoUsuario = null;
 
