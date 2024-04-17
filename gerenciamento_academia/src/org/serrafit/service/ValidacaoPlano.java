@@ -22,7 +22,7 @@ public class ValidacaoPlano {
 			}
 
 			System.out.println("Digite o nome do plano desejado - ");
-			nomePlano = sc.nextLine();
+			nomePlano = sc.next();
 
 			for (Plano plano : listaPlanos) {
 				if (nomePlano.equalsIgnoreCase(plano.getNome()))

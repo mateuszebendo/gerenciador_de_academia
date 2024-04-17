@@ -36,7 +36,7 @@ public class ValidacaoPessoa {
     	boolean cpfCorreto = false;
     	while(!cpfCorreto) {
     		System.out.println("CPF do usuário: ");
-            String cpfInserido = sc.nextLine();
+            String cpfInserido = sc.next();
             
 	        cpfFinal = cpfInserido.replaceAll("[^0-9]", "");
 

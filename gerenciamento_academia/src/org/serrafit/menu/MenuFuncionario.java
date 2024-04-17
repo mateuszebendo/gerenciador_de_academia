@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,10 +38,10 @@ public class MenuFuncionario implements Menu {
 	public MenuFuncionario(Funcionario funcionario) throws IOException {
 		super();
 		this.funcionario = funcionario;
-		this.listaPlanos = RegistroPlano.criarListaPlanos();
-		this.listaAlunos = RegistroAluno.criarListaAlunos();
-		this.listaPersonal = RegistroPersonal.criarListaPersonal();
-		this.listaAvaliacao = RegistroAvaliacao.criarListaAvaliacoes();
+		this.listaPlanos = Registra.criaPlano();
+		this.listaAlunos = Registra.criaAlunos();
+		this.listaPersonal = Registra.criaPersonais();
+		this.listaAvaliacao = Registra.criaAvaliacao();
 	}
 	
 	@Override
@@ -65,27 +66,24 @@ public class MenuFuncionario implements Menu {
 		switch(opcao) {
 			case 1:
 				cadastrarPlano(sc, listaPlanos);				
-				voltarMenu(sc);
 				break;
 			case 2:
 				cadastrarAluno(sc, listaAlunos, listaPlanos);
-				voltarMenu(sc);
 				break;
 			case 3:
 				cadastrarPersonalTrainer(sc, listaPersonal);
-				voltarMenu(sc);
 				break;
 			case 4:
-				emitirRelatorioPlanos(listaPlanos);
+				emitirRelatorioPlanos(sc, listaPlanos);
 				break;
 			case 5:
-				emitirRelatorioAlunos(listaAlunos);
+				emitirRelatorioAlunos(sc, listaAlunos);
 				break;
 			case 6:
-				emitirRelatorioEquipe(listaPersonal, listaFuncionario);
+				emitirRelatorioEquipe(sc, listaPersonal, listaFuncionario);
 				break;
 			case 7:
-				emitirRelacaoAvaliacaoPorPeriodo(listaAvaliacao);
+				emitirRelacaoAvaliacaoPorPeriodo(sc, listaAvaliacao);
 				break;
 			case 0:
 				System.out.println("Finalizando programa..");
@@ -117,7 +115,8 @@ public class MenuFuncionario implements Menu {
 	    System.out.println("\n-- CADASTRO - PLANO - CONCLUÍDO --");
 	    System.out.println("Cadastro do plano '" + nomePlano + "' concluído com sucesso!");
 	    System.out.println(novoPlano);
-	   	   
+	   	
+	    exibirMenu(sc);
 	}
 
 	public void cadastrarAluno(Scanner sc, List <Aluno> listaPessoa, List <Plano> listaPlanos) throws InterruptedException {
@@ -145,6 +144,8 @@ public class MenuFuncionario implements Menu {
 
 	    System.out.println("\n-- Novo aluno cadastrado com sucesso! --");
 	    System.out.println(novoAluno);
+	    
+	    exibirMenu(sc);
 	}
 
 	public void cadastrarPersonalTrainer(Scanner sc, List <PersonalTrainer> listaPersonal) throws InterruptedException {
@@ -177,16 +178,18 @@ public class MenuFuncionario implements Menu {
 	    System.out.println("\n-- CADASTRO - PERSONAL - CONCLUÍDO --");
 	    System.out.println("Cadastro do personal trainer '" + nome + "' concluído com sucesso!");
 	    System.out.println(personalTrainer);
+	    
+	    exibirMenu(sc);
 	}
 	
-	public void emitirRelatorioPlanos(List<Plano> listaPlano) {
-	    try {
-	        File arquivo = new File("C:\\Users\\Public\\listaEquipe.txt");
+	public void emitirRelatorioPlanos(Scanner sc, List<Plano> listaPlano) throws InterruptedException {
+		try {
+	        File arquivo = new File("C:\\Users\\Public\\Documents\\listaPlanos.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
 	        if (listaPlano.isEmpty()) {
 	            System.out.println("A lista de planos está vazia.");
 	        } else {
-	            for (Plano plano : listaPlano) {
+	            for (Plano plano: listaPlano) {
 	                escritor.write(plano + "\n");
 	            }
 	            System.out.println("Relatório de planos emitido com sucesso.");
@@ -196,9 +199,15 @@ public class MenuFuncionario implements Menu {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
+		
+		System.out.println("Planos cadastrados: ");
+	    for (Plano plano : listaPlano) {
+			System.out.println(plano);
+		}
+	    exibirMenu(sc);
 	}
 
-	public void emitirRelatorioAlunos(List<Aluno> listaAlunos) {
+	public void emitirRelatorioAlunos(Scanner sc, List<Aluno> listaAlunos) throws InterruptedException {
 		try {
 	        File arquivo = new File("C:\\Users\\Public\\Documents\\listaAlunos.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
@@ -215,9 +224,15 @@ public class MenuFuncionario implements Menu {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
+		
+		System.out.println("Alunos cadastrados: ");
+	    for (Aluno aluno : listaAlunos) {
+			System.out.println(aluno);
+		}
+	    exibirMenu(sc);
 	}
 	
-	public void emitirRelatorioEquipe(List<PersonalTrainer> listaPersonal, List<Funcionario> listaFuncionario) {
+	public void emitirRelatorioEquipe(Scanner sc, List<PersonalTrainer> listaPersonal, List<Funcionario> listaFuncionario) throws InterruptedException {
 		try {
 	        File arquivo = new File("C:\\Users\\Public\\Documents\\listaEquipe.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
@@ -238,15 +253,28 @@ public class MenuFuncionario implements Menu {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
+		
+		System.out.println("Funcionarios cadastrados: ");
+		for (PersonalTrainer personal : listaPersonal) {
+            System.out.println(personal);
+        }
+		for (Funcionario funcionario: listaFuncionario) {
+			System.out.println(funcionario);
+        }
+		
+		exibirMenu(sc);
 	}
 	
-	public void emitirRelacaoAvaliacaoPorPeriodo(List<Avaliacao> listaAvaliacoes) {
+	public void emitirRelacaoAvaliacaoPorPeriodo(Scanner sc, List<Avaliacao> listaAvaliacoes) throws InterruptedException {
 		try {
 			File arquivo = new File("C:\\Users\\Public\\Documents\\listaAvaliacao.txt");
 	        FileWriter escritor = new FileWriter(arquivo);
+	        
+	        System.out.println("Avaliações de acordo com o mês");
 	        for (int mes = 1; mes <= 12; mes++) {
                 for (Avaliacao avaliacao : listaAvaliacoes) {
                     if (avaliacao.getData().getMonthValue() == mes) {
+                    	System.out.println(avaliacao);
                         escritor.write(avaliacao + "\n");
                     }
                 }
@@ -254,7 +282,9 @@ public class MenuFuncionario implements Menu {
 			escritor.close();
 		} catch (IOException e) {
 	        e.printStackTrace();
-	    }
+	    }		
+		
+		exibirMenu(sc);
 	}
 	
 	public void voltarMenu(Scanner sc) throws InterruptedException {

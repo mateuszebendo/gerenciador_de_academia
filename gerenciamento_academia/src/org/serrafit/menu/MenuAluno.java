@@ -28,9 +28,9 @@ public class MenuAluno implements Menu {
 	public MenuAluno(Aluno aluno) {
 		super();
 		this.aluno = aluno;
-		this.personais = RegistroPersonal.criarListaPersonal();
-		this.agendamentos = RegistroAgendamento.criarListaAgendamentos();
-		this.avaliacoes = RegistroAvaliacao.criarListaAvaliacoes();
+		this.personais = Registra.criaPersonais();
+		this.agendamentos = Registra.criaAgendamento();
+		this.avaliacoes = Registra.criaAvaliacao();
 	}
 
 	@Override
