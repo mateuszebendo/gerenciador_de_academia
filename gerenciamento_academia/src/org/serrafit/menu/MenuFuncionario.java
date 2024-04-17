@@ -56,10 +56,11 @@ public class MenuFuncionario implements Menu {
 				""", funcionario.getNome());
 		System.out.println(mensagem);
 		int opcao = sc.nextInt();
-		while(opcao != 0) {
+		sc.nextLine();
+		do {
 		switch(opcao) {
 			case 1:
-				cadastrarPlano(sc, listaPlanos);
+				cadastrarPlano(sc, listaPlanos);				
 				voltarMenu(sc);
 				break;
 			case 2:
@@ -88,7 +89,7 @@ public class MenuFuncionario implements Menu {
 				System.exit(0);
 				break;
 		}
-	  }
+	  }while(opcao != 0);
 	}
 
 	public void cadastrarPlano(Scanner sc, List <Plano> listaPlano) throws InterruptedException{
@@ -103,6 +104,7 @@ public class MenuFuncionario implements Menu {
 	    System.out.println("Duração em meses: ");
 	    
 	    int duracao = sc.nextInt();
+	    sc.nextLine();
 	    
 	    Plano novoPlano = new Plano(nomePlano, valor, descricao, duracao);
 	    
@@ -111,7 +113,7 @@ public class MenuFuncionario implements Menu {
 	    System.out.println("\n-- CADASTRO - PLANO - CONCLUÍDO --");
 	    System.out.println("Cadastro do plano '" + nomePlano + "' concluído com sucesso!");
 	    System.out.println(novoPlano);
-	    sc.nextLine();
+	   	   
 	}
 
 	public void cadastrarAluno(Scanner sc, List <Aluno> listaPessoa, List <Plano> listaPlanos) throws InterruptedException {
@@ -160,9 +162,9 @@ public class MenuFuncionario implements Menu {
 
 	    String cref = ValidacaoPersonal.validaCref(sc);
 
-	    //colocar especialidade como enum
+	    
 	    System.out.print("Especialidade: ");
-	    String especialidade = sc.next();
+	    String especialidade = sc.nextLine();
 
 	    Pessoa personalTrainer = new PersonalTrainer(nome, cpf, dataNascimento, contato, senha, inicioAtendimento, finalAtendimento, cref, especialidade);
 	    
@@ -256,7 +258,7 @@ public class MenuFuncionario implements Menu {
         boolean opcaoValida = false;
 
         do {
-            System.out.print("Voltar ao Menu? (S/n)");
+            System.out.print("Voltar ao Menu? (S/N)");
             voltar = sc.next().trim().toUpperCase();
 
             if (voltar.equals("S")) {
