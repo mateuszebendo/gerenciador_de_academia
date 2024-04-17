@@ -32,7 +32,6 @@ public class ValidacaoLogin {
 				senhaCorreta = cadastros.get(i).getSenha();
 
 				if (cpfCorreto.equals(validaCPF) && senhaCorreta.equals(validaSenha)) {
-					System.out.println("Logou");
 					loginConcluido = true;
 					usuarioConectado = i;
 				} else if (loginConcluido == false && i == cadastros.size() - 1) {
